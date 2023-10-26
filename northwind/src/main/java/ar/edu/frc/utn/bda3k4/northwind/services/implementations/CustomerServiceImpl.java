@@ -3,9 +3,11 @@ package ar.edu.frc.utn.bda3k4.northwind.services.implementations;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.CustomerRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CustomerService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;

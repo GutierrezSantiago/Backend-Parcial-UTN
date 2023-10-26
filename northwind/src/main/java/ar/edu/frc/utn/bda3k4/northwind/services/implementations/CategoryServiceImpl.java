@@ -3,9 +3,11 @@ package ar.edu.frc.utn.bda3k4.northwind.services.implementations;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Category;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.CategoryRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CategoryService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 

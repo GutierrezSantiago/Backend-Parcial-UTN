@@ -3,9 +3,11 @@ package ar.edu.frc.utn.bda3k4.northwind.services.implementations;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Shipper;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.ShipperRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.ShipperService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ShipperServiceImpl implements ShipperService {
 
     private final ShipperRepository shipperRepository;
