@@ -36,7 +36,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Supplier findById(Integer id) {
-        Supplier supplier = this.supplierRepository.findById(id).orElseThrow(()-IllegalArgumentException("Supplier doesn not exist"));
+        Supplier supplier = this.supplierRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Supplier doesn not exist"));
         return supplier;
     }
 
