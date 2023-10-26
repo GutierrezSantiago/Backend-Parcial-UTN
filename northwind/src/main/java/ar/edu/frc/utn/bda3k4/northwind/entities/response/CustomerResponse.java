@@ -30,7 +30,8 @@ public class CustomerResponse {
                 .city(aCustomer.getCity())
                 .region(aCustomer.getRegion())
                 .postalCode(aCustomer.getPostalCode())
-                .country(aCustomer.getPhone())
+                .country(aCustomer.getCountry())
+                .phone(aCustomer.getPhone())
                 .fax(aCustomer.getFax())
                 .build();
     }

@@ -38,8 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElse(null);
         if(category != null){
             this.categoryRepository.delete(category);
+            return category;
         }
-        return category;
+        throw new IllegalArgumentException("Category not found");
     }
 
     @Override

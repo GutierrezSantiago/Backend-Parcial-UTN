@@ -35,8 +35,9 @@ public class ShipperServiceImpl implements ShipperService {
         Shipper shipper = this.shipperRepository.findById(id).orElse(null);
         if(shipper != null){
             this.shipperRepository.delete(shipper);
+            return shipper;
         }
-        return shipper;
+        throw new IllegalArgumentException("Shipper not found");
     }
 
     @Override

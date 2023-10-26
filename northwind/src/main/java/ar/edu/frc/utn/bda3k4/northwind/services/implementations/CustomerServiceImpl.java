@@ -45,8 +45,9 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = this.customerRepository.findById(s).orElse(null);
         if(customer != null){
             this.customerRepository.delete(customer);
+            return customer;
         }
-        return customer;
+        throw new IllegalArgumentException("Customer not found");
     }
 
     @Override

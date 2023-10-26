@@ -1,7 +1,6 @@
 package ar.edu.frc.utn.bda3k4.northwind.controllers;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
-import ar.edu.frc.utn.bda3k4.northwind.entities.Order;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.CustomerRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.CustomerResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CustomerService;
@@ -53,7 +52,7 @@ public class CustomerController {
                             aRequest.getCountry(),
                             aRequest.getPhone(),
                             aRequest.getFax(),
-                            new ArrayList<Order>()
+                            new ArrayList<>()
             ));
             return ResponseEntity.ok(customer);
         } catch (IllegalArgumentException e) {
@@ -70,7 +69,7 @@ public class CustomerController {
 
             return ResponseEntity.ok(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -82,7 +81,7 @@ public class CustomerController {
             Customer customer = customerService.delete(id);
             return ResponseEntity.ok(customer);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
