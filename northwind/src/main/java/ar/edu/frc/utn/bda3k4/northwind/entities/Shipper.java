@@ -1,7 +1,6 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Shipper {
+    @Id
+    @TableGenerator(name = "Shippers", table = "sqlite_sequence",
+            pkColumnName = "name", valueColumnName = "seq",
+            pkColumnValue="Shippers",
+            initialValue=1, allocationSize=1)
+    @Column(name = "CustomerID")
+    private Integer id;
+
+    @Column(name = "CompanyName")
+    private String companyName;
+
+    @Column(name = "Phone")
+    private String phone;
 }
