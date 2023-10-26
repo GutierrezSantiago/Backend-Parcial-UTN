@@ -25,14 +25,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         this.productService = productService;
     }
 
-    @Override
     public OrderDetail add(OrderDetail entity) {
         Order order = this.orderService.findById(entity.getOrderId());
         Product product = this.productService.findById(entity.getProductId());
         return this.orderDetailRepository.save(entity);
     }
 
-    @Override
     public OrderDetail update(OrderDetail entity) {
         OrderDetailPK id = new OrderDetailPK(entity.getOrderId(), entity.getProductId());
         OrderDetail orderDetail = this.orderDetailRepository.findById(id).orElseThrow(
@@ -43,20 +41,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return this.orderDetailRepository.save(orderDetail);
     }
 
-    @Override
     public OrderDetail delete(OrderDetailPK orderDetailPK) {
         OrderDetail orderDetail = this.orderDetailRepository.findById(orderDetailPK).orElse(null);
         if (orderDetail != null) {this.orderDetailRepository.delete(orderDetail);}
         return orderDetail;
     }
 
-    @Override
     public OrderDetail findById(OrderDetailPK orderDetailPK) {
         return this.orderDetailRepository.findById(orderDetailPK).orElseThrow(
                 () -> new IllegalArgumentException("No se encontró el OrderDetail con id suministrado"));
     }
 
-    @Override
     public List<OrderDetail> findAll() {
         return this.orderDetailRepository.findAll();
     }

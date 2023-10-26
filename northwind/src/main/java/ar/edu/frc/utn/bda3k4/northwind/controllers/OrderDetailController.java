@@ -12,16 +12,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/order-details")
 public class OrderDetailController {
-    private final OrderDetailService service;
+    private final OrderDetailService orderDetailService;
 
-    public OrderDetailController(OrderDetailService service) {
-        this.service = service;
+    public OrderDetailController(OrderDetailService orderDetailService) {
+        this.orderDetailService = orderDetailService;
     }
 
-    public ResponseEntity<List<OrderDetailResponse>> findAlumnos() {
-        List<OrderDetail> details = service.findAll();
+    /*public ResponseEntity<List<OrderDetailResponse>> findAlumnos() {
         return alumnos.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(alumnos);
-    }
+    }*/
 }
