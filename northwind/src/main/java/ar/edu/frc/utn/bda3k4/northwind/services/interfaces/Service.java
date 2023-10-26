@@ -8,5 +8,5 @@ public interface Service<T, ID> {
     T delete(ID id);
 
     T findById(ID id);
-    List<T> getAll();
+    List<T> findAll();
 }

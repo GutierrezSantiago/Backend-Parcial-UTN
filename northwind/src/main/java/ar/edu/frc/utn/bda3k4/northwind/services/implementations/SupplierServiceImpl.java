@@ -29,7 +29,7 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public List<Supplier> getAll() {
+    public List<Supplier> findAll() {
         return null;
     }
 }
