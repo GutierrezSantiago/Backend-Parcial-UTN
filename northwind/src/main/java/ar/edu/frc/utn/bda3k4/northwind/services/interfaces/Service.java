@@ -7,6 +7,6 @@ public interface Service<T, ID> {
     T update(T entity);
     T delete(ID id);
 
-    T getById(ID id);
+    T findById(ID id);
     List<T> getAll();
 }

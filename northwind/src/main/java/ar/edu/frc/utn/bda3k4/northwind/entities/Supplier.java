@@ -59,4 +59,6 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Product> products;
+
+    void update(String companyName, String)
 }
