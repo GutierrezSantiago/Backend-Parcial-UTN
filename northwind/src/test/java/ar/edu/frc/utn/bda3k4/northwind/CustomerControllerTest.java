@@ -2,7 +2,8 @@ package ar.edu.frc.utn.bda3k4.northwind;
 
 import ar.edu.frc.utn.bda3k4.northwind.controllers.CustomerController;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
-import ar.edu.frc.utn.bda3k4.northwind.entities.request.CustomerRequest;
+import ar.edu.frc.utn.bda3k4.northwind.entities.request.create.CustomerCreateRequest;
+import ar.edu.frc.utn.bda3k4.northwind.entities.request.update.CustomerUpdateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.CustomerRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.implementations.CustomerServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -85,7 +86,7 @@ public class CustomerControllerTest {
 
         Assertions.assertEquals(
                 HttpStatus.CREATED,
-                customerController.add(new CustomerRequest()).getStatusCode()
+                customerController.add(new CustomerCreateRequest()).getStatusCode()
         );
     }
 
@@ -98,7 +99,7 @@ public class CustomerControllerTest {
 
         Assertions.assertEquals(
                 HttpStatus.ACCEPTED,
-                customerController.update(new CustomerRequest()).getStatusCode()
+                customerController.update("AAAA", new CustomerUpdateRequest()).getStatusCode()
         );
     }
 
@@ -111,7 +112,7 @@ public class CustomerControllerTest {
 
         IllegalArgumentException thrown =  Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> customerController.update(new CustomerRequest()),
+                () -> customerController.update("AAAA", new CustomerUpdateRequest()),
                 "Se espera ResourceNotFoundException");
 
         Assertions.assertEquals(thrown.getMessage(), "Customer not found");

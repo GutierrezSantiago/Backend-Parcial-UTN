@@ -1,4 +1,4 @@
-package ar.edu.frc.utn.bda3k4.northwind.entities.request;
+package ar.edu.frc.utn.bda3k4.northwind.entities.request.create;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 //@FieldDefaults(level = AccessLevel.PRIVATE) no sé si hace falta
-public class CustomerRequest {
+public class CustomerCreateRequest {
     @NotBlank(message = "Id is mandatory")
     private String id;
     @NotBlank(message = "Company Name is mandatory")

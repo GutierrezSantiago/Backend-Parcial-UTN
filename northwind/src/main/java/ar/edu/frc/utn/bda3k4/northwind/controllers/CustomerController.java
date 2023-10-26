@@ -1,7 +1,8 @@
 package ar.edu.frc.utn.bda3k4.northwind.controllers;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
-import ar.edu.frc.utn.bda3k4.northwind.entities.request.CustomerRequest;
+import ar.edu.frc.utn.bda3k4.northwind.entities.request.create.CustomerCreateRequest;
+import ar.edu.frc.utn.bda3k4.northwind.entities.request.update.CustomerUpdateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.CustomerResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CustomerService;
 import lombok.val;
@@ -35,7 +36,7 @@ public class CustomerController {
         }
     }
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody CustomerRequest aRequest) {
+    public ResponseEntity<Object> add(@RequestBody CustomerCreateRequest aRequest) {
         try {
             val customer = customerService.add(aRequest.toCustomer());
             return ResponseEntity.ok(customer);
@@ -46,10 +47,10 @@ public class CustomerController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Object> update(@RequestBody CustomerRequest aRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable String id, @RequestBody CustomerUpdateRequest aRequest) {
         try {
-            val customer = customerService.update(aRequest.toCustomer());
+            val customer = customerService.update(id, aRequest.toCustomer());
             return ResponseEntity.accepted().body(customer);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
