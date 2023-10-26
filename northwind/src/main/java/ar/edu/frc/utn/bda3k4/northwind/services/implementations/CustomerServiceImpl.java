@@ -58,6 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findAll() {
-        return this.customerRepository.findAll();
+        List<Customer> customers = this.customerRepository.findAll();
+        if(customers.isEmpty()){throw new IllegalArgumentException("No customers found");}
+        return customers;
     }
 }

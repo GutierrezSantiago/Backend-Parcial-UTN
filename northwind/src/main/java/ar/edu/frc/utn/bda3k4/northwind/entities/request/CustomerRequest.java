@@ -1,5 +1,6 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities.request;
 
+import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -28,6 +29,23 @@ public class CustomerRequest {
     private String phone;
     @NotBlank(message = "Fax is mandatory")
     private String fax;
+
+    public Customer toCustomer() {
+        return new Customer(
+                id,
+                companyName,
+                contactName,
+                contactTitle,
+                address,
+                city,
+                region,
+                postalCode,
+                country,
+                phone,
+                fax,
+                null
+        );
+    }
 }
 
 

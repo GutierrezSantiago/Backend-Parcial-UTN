@@ -31,7 +31,7 @@ public class CustomerController {
 
             return ResponseEntity.ok(customers);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -39,22 +39,20 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody CustomerRequest aRequest) {
         try {
-            val customer = customerService.add(
-                    new Customer(
-                            aRequest.getId(),
-                            aRequest.getCompanyName(),
-                            aRequest.getContactName(),
-                            aRequest.getContactTitle(),
-                            aRequest.getAddress(),
-                            aRequest.getCity(),
-                            aRequest.getRegion(),
-                            aRequest.getPostalCode(),
-                            aRequest.getCountry(),
-                            aRequest.getPhone(),
-                            aRequest.getFax(),
-                            new ArrayList<>()
-            ));
+            val customer = customerService.add(aRequest.toCustomer());
             return ResponseEntity.ok(customer);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> update(@RequestBody CustomerRequest aRequest) {
+        try {
+            val customer = customerService.update(aRequest.toCustomer());
+            return ResponseEntity.accepted().body(customer);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
