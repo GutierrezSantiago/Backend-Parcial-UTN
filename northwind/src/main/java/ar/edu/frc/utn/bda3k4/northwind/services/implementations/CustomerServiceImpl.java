@@ -21,8 +21,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer update(Customer entity) {
-        Customer customer = this.customerRepository.findById(entity.getId()).orElse(null);
-        return null;
+
+        Customer customer = this.customerRepository.findById(entity.getId()).orElseThrow(()->
+                new IllegalArgumentException("Customer not found"));
+        customer.setCompanyName(entity.getCompanyName());
+        customer.setContactName(entity.getContactName());
+        customer.setContactTitle(entity.getContactTitle());
+        customer.setAddress(entity.getAddress());
+        customer.setCity(entity.getCity());
+        customer.setRegion(entity.getRegion());
+        customer.setPostalCode(entity.getPostalCode());
+        customer.setCountry(entity.getCountry());
+        customer.setPhone(entity.getPhone());
+        customer.setFax(entity.getFax());
+        return this.customerRepository.save(customer);
+
     }
 
     @Override
@@ -30,9 +43,8 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = this.customerRepository.findById(s).orElse(null);
         if(customer != null){
             this.customerRepository.delete(customer);
-            return customer;
         }
-        return null;
+        return customer;
     }
 
     @Override

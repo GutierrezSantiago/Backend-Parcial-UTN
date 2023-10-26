@@ -7,16 +7,10 @@ import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CategoryService;
 import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
-
     private final CategoryRepository categoryRepository;
 
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-    }
-
-    @Override
-    public List<Category> findAll() {
-        return this.categoryRepository.findAll();
     }
 
     @Override
@@ -26,22 +20,34 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category entity) {
-        Category category = this.categoryRepository.findById(entity.getId()).orElseThrow(() -> new IllegalArgumentException("Category not found"));
+        Category category = this.categoryRepository.findById(entity.getId())
+                .orElseThrow(()->
+                new IllegalArgumentException("Category not found"));
+        category.setDescription(entity.getDescription());
+        category.setName(entity.getName());
+        category.setPicture(entity.getPicture());
+        category.setProducts(entity.getProducts());
         return this.categoryRepository.save(category);
     }
 
     @Override
     public Category delete(Integer id) {
-        Category category = this.categoryRepository.findById(id).orElse(null);
+        Category category = this.categoryRepository.findById(id)
+                .orElse(null);
         if(category != null){
             this.categoryRepository.delete(category);
-            return category;
         }
-        return null;
+        return category;
     }
 
     @Override
     public Category findById(Integer id) {
-        return this.categoryRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Category not found"));
+        return this.categoryRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("Category not found"));
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return this.categoryRepository.findAll();
     }
 }
