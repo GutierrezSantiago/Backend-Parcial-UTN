@@ -22,6 +22,7 @@ public class CustomerResponse {
 
     public static CustomerResponse from(Customer aCustomer) {
         return CustomerResponse.builder()
+                .id(aCustomer.getId())
                 .companyName(aCustomer.getCompanyName())
                 .contactName(aCustomer.getContactName())
                 .contactTitle(aCustomer.getContactTitle())
