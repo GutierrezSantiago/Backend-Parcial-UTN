@@ -8,8 +8,6 @@ import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @RequestMapping("/api/customer")
 @RestController
 //@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true) chequear

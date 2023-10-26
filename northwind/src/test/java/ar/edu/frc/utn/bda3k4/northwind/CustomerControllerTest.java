@@ -20,7 +20,6 @@ import static org.mockito.ArgumentMatchers.any;
 
 public class CustomerControllerTest {
     private CustomerController customerController;
-    private CustomerServiceImpl customerService;
     private CustomerRepository customerRepository;
     private final Customer CUSTOMER = new Customer("AAAA", "Aluminio",
             "Maria Anders", "Sales Representative", "Obere Str. 57",
@@ -30,7 +29,7 @@ public class CustomerControllerTest {
     @BeforeEach
     public void setup() {
         customerRepository = Mockito.mock(CustomerRepository.class);
-        customerService = new CustomerServiceImpl(customerRepository);
+        CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository);
         customerController = new CustomerController(customerService);
     }
 
