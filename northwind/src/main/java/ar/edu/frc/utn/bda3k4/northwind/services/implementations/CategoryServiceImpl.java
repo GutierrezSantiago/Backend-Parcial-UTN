@@ -6,11 +6,11 @@ import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CategoryService;
 
 import java.util.List;
 
-public class CategoryImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
