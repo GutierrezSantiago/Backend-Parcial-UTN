@@ -27,14 +27,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public OrderDetail add(OrderDetail entity) {
-        Order order = this.orderService.findById(entity.getId().getOrderId());
-        Product product = this.productService.findById(entity.getId().getProductId());
+        Order order = this.orderService.findById(entity.getOrderId());
+        Product product = this.productService.findById(entity.getProductId());
         return this.orderDetailRepository.save(entity);
     }
 
     @Override
     public OrderDetail update(OrderDetail entity) {
-        OrderDetail orderDetail = this.orderDetailRepository.findById(entity.getId()).orElseThrow(
+        OrderDetailPK id = new OrderDetailPK(entity.getOrderId(), entity.getProductId());
+        OrderDetail orderDetail = this.orderDetailRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("No se encontró el OrderDetail con id suministrado"));
         orderDetail.setUnitPrice(entity.getUnitPrice());
         orderDetail.setQuantity(entity.getQuantity());

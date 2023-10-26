@@ -67,7 +67,7 @@ public class Employee {
     private String extension;
 
     @Column(name = "Photo")
-    private Byte[] photo;
+    private byte[] photo;
 
     @Column(name = "Notes")
     private String notes;

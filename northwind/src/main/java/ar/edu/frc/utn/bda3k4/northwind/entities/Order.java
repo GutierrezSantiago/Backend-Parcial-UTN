@@ -1,11 +1,13 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
 import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -56,17 +58,18 @@ public class Order {
     private String shipCountry;
 
     @ManyToOne
-    @JoinColumn(name = "CustomerID", referencedColumnName = "CustomerID")
-    @Column(name = "CustomerID")
+    @JoinColumn(name = "CustomerID")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "EmployeeID", referencedColumnName = "EmployeeID")
-    @Column(name = "EmployeeID")
+    @JoinColumn(name = "EmployeeID")
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn(name = "ShipVia", referencedColumnName = "ShipperID")
-    @Column(name = "ShipVia")
+    @JoinColumn(name = "ShipVia")
     private Shipper shipper;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<OrderDetail> orderDetails;
 }

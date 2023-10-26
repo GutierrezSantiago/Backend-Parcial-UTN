@@ -13,8 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @IdClass(OrderDetailPK.class)
 public class OrderDetail {
-    @EmbeddedId
-    private OrderDetailPK id;
+
+    @Id
+    @Column(name = "OrderId")
+    private Integer orderId;
+
+    @Id
+    @Column(name = "ProductId")
+    private Integer productId;
 
     @Column(name = "UnitPrice")
     private Double unitPrice;
@@ -25,4 +31,11 @@ public class OrderDetail {
     @Column(name = "Discount")
     private Double discount;
 
+    @ManyToOne
+    @JoinColumn(name = "OrderId", nullable = false)
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "ProductId", nullable = false)
+    private Product product;
 }

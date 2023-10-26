@@ -30,7 +30,7 @@ public class Category {
     String description;
 
     @Column(name = "Picture")
-    Byte[] picture;
+    byte[] picture;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
