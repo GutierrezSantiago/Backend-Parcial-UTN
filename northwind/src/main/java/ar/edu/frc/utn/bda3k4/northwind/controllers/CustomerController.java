@@ -1,4 +1,4 @@
-package ar.edu.frc.utn.bda3k4.northwind.entities.controllers;
+package ar.edu.frc.utn.bda3k4.northwind.controllers;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Order;
