@@ -1,12 +1,12 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 public class Supplier {
     @Id
     @Column(name = "SupplierID")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Suppliers")
+    @TableGenerator(name = "Suppliers", table = "sqlite_sequence",
+            pkColumnName = "name", valueColumnName = "seq",
+            pkColumnValue="Suppliers",
+            initialValue=1, allocationSize=1)
     Integer id;
 
     @Column(name = "CompanyName")
@@ -50,4 +55,8 @@ public class Supplier {
 
     @Column(name = "HomePage")
     String homePage;
+
+    @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Product> products;
 }

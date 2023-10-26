@@ -1,27 +1,27 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "Suppliers")
+@Table(name = "Product")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
     @Id
-    @Column(name = "SupplierID")
+    @Column(name = "ProductID")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Products")
+    @TableGenerator(name = "Products", table = "sqlite_sequence",
+            pkColumnName = "name", valueColumnName = "seq",
+            pkColumnValue="Products",
+            initialValue=1, allocationSize=1)
     Integer id;
 
     @Column(name = "ProductName")
     String name;
-
-    // No olvidar las ref a objetos
 
     @Column(name = "QuantityPerUnit")
     String quantityPerUnit;
@@ -40,6 +40,14 @@ public class Product {
 
     @Column(name = "Discontinued")
     boolean discontinued;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "SupplierID")
+    Supplier supplier;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "CategoryID")
+    Category category;
 }
 
 
