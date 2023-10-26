@@ -13,7 +13,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Supplier update(Supplier entity) {
-        Supplier existingSupplier = this.getById(entity.getId());
+        Supplier existingSupplier = this.findById(entity.getId());
 
         return null;
     }

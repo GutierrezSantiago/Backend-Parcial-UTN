@@ -13,13 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @IdClass(OrderDetailPK.class)
 public class OrderDetail {
-    @Id
-    @Column(name = "OrderID")
-    private Integer orderId;
-
-    @Id
-    @Column(name = "ProductID")
-    private Integer productId;
+    @EmbeddedId
+    private OrderDetailPK id;
 
     @Column(name = "UnitPrice")
     private Double unitPrice;

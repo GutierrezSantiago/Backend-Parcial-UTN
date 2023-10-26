@@ -1,5 +1,6 @@
 package ar.edu.frc.utn.bda3k4.northwind.support;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Embeddable
 public class OrderDetailPK implements Serializable {
     private Integer orderId;
     private Integer productId;
