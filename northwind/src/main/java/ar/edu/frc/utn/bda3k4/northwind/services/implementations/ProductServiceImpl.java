@@ -14,7 +14,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(Product entity) {
+    public Product update(Integer id, Product entity) {
         return null;
     }
 

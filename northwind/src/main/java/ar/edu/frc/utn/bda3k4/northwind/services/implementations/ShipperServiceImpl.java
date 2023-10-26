@@ -22,9 +22,9 @@ public class ShipperServiceImpl implements ShipperService {
     }
 
     @Override
-    public Shipper update(Shipper entity) {
-        Shipper shipper = this.shipperRepository.findById(entity.getId()).orElseThrow(()->
-                new IllegalArgumentException("Shipper not found"));
+    public Shipper update(Integer id, Shipper entity) {
+        Shipper shipper = this.shipperRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Shipper not found"));
         shipper.setCompanyName(entity.getCompanyName());
         shipper.setPhone(entity.getPhone());
         return this.shipperRepository.save(shipper);

@@ -38,4 +38,12 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "ProductId", nullable = false)
     private Product product;
+
+    public OrderDetail(Integer orderId, Integer productId, Double unitPrice, Integer quantity, Double discount) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.discount = discount;
+    }
 }

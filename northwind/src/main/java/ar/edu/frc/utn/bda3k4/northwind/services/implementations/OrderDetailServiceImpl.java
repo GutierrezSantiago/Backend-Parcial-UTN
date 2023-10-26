@@ -31,10 +31,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return this.orderDetailRepository.save(entity);
     }
 
-    public OrderDetail update(OrderDetail entity) {
-        OrderDetailPK id = new OrderDetailPK(entity.getOrderId(), entity.getProductId());
-        OrderDetail orderDetail = this.orderDetailRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("No se encontró el OrderDetail con id suministrado"));
+    public OrderDetail update(OrderDetailPK id, OrderDetail entity) {
+        OrderDetail orderDetail = this.orderDetailRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el OrderDetail con id suministrado"));
         orderDetail.setUnitPrice(entity.getUnitPrice());
         orderDetail.setQuantity(entity.getQuantity());
         orderDetail.setDiscount(entity.getDiscount());

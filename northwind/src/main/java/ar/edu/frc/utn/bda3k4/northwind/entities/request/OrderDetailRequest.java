@@ -1,5 +1,6 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities.request;
 
+import ar.edu.frc.utn.bda3k4.northwind.entities.OrderDetail;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -16,4 +17,14 @@ public class OrderDetailRequest {
     private Integer quantity;
     @NotBlank(message = "discount is mandatory")
     private Double discount;
+
+    public OrderDetail toOrderDetail() {
+        return new OrderDetail(
+                orderId,
+                productId,
+                unitPrice,
+                quantity,
+                discount
+        );
+    }
 }

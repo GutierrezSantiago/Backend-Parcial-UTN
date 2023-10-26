@@ -14,7 +14,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order update(Order entity) {
+    public Order update(Integer id, Order entity) {
         return null;
     }
 

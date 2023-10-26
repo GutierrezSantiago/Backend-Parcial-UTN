@@ -22,10 +22,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer update(Customer entity) {
+    public Customer update(String id, Customer entity) {
 
-        Customer customer = this.customerRepository.findById(entity.getId()).orElseThrow(()->
-                new IllegalArgumentException("Customer not found"));
+        Customer customer = this.customerRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Customer not found"));
         customer.setCompanyName(entity.getCompanyName());
         customer.setContactName(entity.getContactName());
         customer.setContactTitle(entity.getContactTitle());

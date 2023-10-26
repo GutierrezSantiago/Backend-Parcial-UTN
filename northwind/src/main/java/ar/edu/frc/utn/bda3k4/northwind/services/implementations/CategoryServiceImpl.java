@@ -21,10 +21,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Category entity) {
-        Category category = this.categoryRepository.findById(entity.getId())
-                .orElseThrow(()->
-                new IllegalArgumentException("Category not found"));
+    public Category update(Integer id, Category entity) {
+        Category category = this.categoryRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Category not found"));
         category.setDescription(entity.getDescription());
         category.setName(entity.getName());
         category.setPicture(entity.getPicture());
