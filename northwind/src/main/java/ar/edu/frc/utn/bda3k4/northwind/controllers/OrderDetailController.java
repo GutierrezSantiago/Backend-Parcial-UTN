@@ -17,10 +17,4 @@ public class OrderDetailController {
     public OrderDetailController(OrderDetailService orderDetailService) {
         this.orderDetailService = orderDetailService;
     }
-
-    /*public ResponseEntity<List<OrderDetailResponse>> findAlumnos() {
-        return alumnos.isEmpty()
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(alumnos);
-    }*/
 }

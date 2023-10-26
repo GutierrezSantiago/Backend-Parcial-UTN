@@ -20,7 +20,7 @@ public class Shipper {
             pkColumnName = "name", valueColumnName = "seq",
             pkColumnValue="Shippers",
             initialValue=1, allocationSize=1)
-    @Column(name = "CustomerID")
+    @Column(name = "ShipperID")
     private Integer id;
 
     @Column(name = "CompanyName")
