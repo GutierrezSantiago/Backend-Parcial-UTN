@@ -1,9 +1,12 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -12,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Shipper {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Shippers")
     @TableGenerator(name = "Shippers", table = "sqlite_sequence",
             pkColumnName = "name", valueColumnName = "seq",
             pkColumnValue="Shippers",
@@ -24,4 +28,8 @@ public class Shipper {
 
     @Column(name = "Phone")
     private String phone;
+
+    @OneToMany(mappedBy = "shipper", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Order> orders;
 }
