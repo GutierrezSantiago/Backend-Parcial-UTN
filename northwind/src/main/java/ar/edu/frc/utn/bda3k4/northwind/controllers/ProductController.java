@@ -5,7 +5,6 @@ import ar.edu.frc.utn.bda3k4.northwind.entities.Product;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Supplier;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.ProductRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.ProductResponse;
-import ar.edu.frc.utn.bda3k4.northwind.entities.response.SupplierResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CategoryService;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.ProductService;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.SupplierService;
@@ -44,7 +43,8 @@ public class ProductController {
     public ResponseEntity<Object> add(@RequestBody ProductRequest aRequest) {
         try {
             Category category = categoryService.findById(aRequest.getCategoryId());
-            Supplier supplier = supplierService.findById(aRequest.getSupplierId());
+            Supplier supplier = null;
+            if (aRequest.getSupplierId() != null) {supplier = supplierService.findById(aRequest.getSupplierId());}
             Product product = aRequest.toProduct();
             product.setCategory(category);
             product.setSupplier(supplier);
@@ -60,7 +60,13 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody ProductRequest aRequest) {
         try {
-            Product product = productService.update(id, aRequest.toProduct());
+            Product product = aRequest.toProduct();
+            Supplier supplier = null;
+            if (aRequest.getSupplierId() != null) {supplier = supplierService.findById(aRequest.getSupplierId());}
+            Category category = categoryService.findById(aRequest.getCategoryId());
+            product.setCategory(category);
+            product.setSupplier(supplier);
+            product = productService.update(id, product);
             return ResponseEntity.accepted().body(ProductResponse.from(product));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -84,8 +90,8 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findOne(@PathVariable Integer id) {
         try {
-            Supplier supplier = supplierService.findById(id);
-            return ResponseEntity.ok(SupplierResponse.from(supplier));
+            Product product = productService.findById(id);
+            return ResponseEntity.ok(ProductResponse.from(product));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

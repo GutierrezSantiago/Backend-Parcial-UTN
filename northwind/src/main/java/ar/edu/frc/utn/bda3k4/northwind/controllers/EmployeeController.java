@@ -52,11 +52,10 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody EmployeeRequest aRequest) {
         try {
+            Employee reportsTo = null;
             Employee modifiedEmployee = aRequest.toEmployee();
-            if (aRequest.getReportsTo() != null){
-                Employee reportsTo = employeeService.findById(aRequest.getReportsTo());
-                modifiedEmployee.setReportsTo(reportsTo);
-            }
+            if (aRequest.getReportsTo() != null){reportsTo = employeeService.findById(aRequest.getReportsTo());}
+            modifiedEmployee.setReportsTo(reportsTo);
             modifiedEmployee = employeeService.update(id, modifiedEmployee);
             return ResponseEntity.accepted().body(EmployeeResponse.from(modifiedEmployee));
         } catch (IllegalArgumentException e) {

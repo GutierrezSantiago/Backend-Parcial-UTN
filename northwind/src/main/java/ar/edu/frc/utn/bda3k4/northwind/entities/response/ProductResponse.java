@@ -19,10 +19,12 @@ public class ProductResponse {
     private Boolean discontinued;
 
     public static ProductResponse from(Product aProduct) {
+        Integer supplierId = null;
+        if(aProduct.getSupplier() != null) supplierId = aProduct.getSupplier().getId();
         return ProductResponse.builder()
                 .id(aProduct.getId())
                 .name(aProduct.getName())
-                .supplierId(aProduct.getSupplier().getId())
+                .supplierId(supplierId)
                 .categoryId(aProduct.getCategory().getId())
                 .quantityPerUnit(aProduct.getQuantityPerUnit())
                 .unitPrice(aProduct.getUnitPrice())

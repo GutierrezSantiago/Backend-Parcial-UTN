@@ -24,9 +24,7 @@ public class SupplierRequest {
     private String country;
     @NotBlank(message = "Phone is mandatory")
     private String phone;
-    @NotBlank(message = "Fax is mandatory")
     private String fax;
-    @NotBlank(message = "HomePage is mandatory")
     private String homePage;
 
     public Supplier toSupplier() {

@@ -69,6 +69,7 @@ public class Product {
 
     public void update(Product product) {
         this.name = product.getName();
+        this.supplier = product.getSupplier();
         this.quantityPerUnit = product.getQuantityPerUnit();
         this.unitPrice = product.getUnitPrice();
         this.unitsInStock = product.getUnitsInStock();

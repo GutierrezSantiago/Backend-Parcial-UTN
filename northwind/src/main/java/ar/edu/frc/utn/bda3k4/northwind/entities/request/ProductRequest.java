@@ -20,7 +20,6 @@ public class ProductRequest {
     private Integer reorderLevel;
     @NotBlank(message = "Discontinued is mandatory")
     private Boolean discontinued;
-    @NotBlank(message = "Supplier is mandatory")
     private Integer supplierId;
     @NotBlank(message = "Category is mandatory")
     private Integer categoryId;

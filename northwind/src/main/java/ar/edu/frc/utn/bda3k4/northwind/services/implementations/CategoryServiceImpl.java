@@ -24,10 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Integer id, Category entity) {
         Category category = this.categoryRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Category not found"));
-        category.setDescription(entity.getDescription());
-        category.setName(entity.getName());
-        category.setPicture(entity.getPicture());
-        category.setProducts(entity.getProducts());
+        category.update(entity);
         return this.categoryRepository.save(category);
     }
 
@@ -44,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findById(Integer id) {
+        if (id == null) throw new IllegalArgumentException("CategoryId can't be null");
         return this.categoryRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("Category not found"));
     }

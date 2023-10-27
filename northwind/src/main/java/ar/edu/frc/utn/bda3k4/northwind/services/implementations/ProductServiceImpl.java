@@ -25,7 +25,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = this.productRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Product not found"));
         product.update(entity);
-        return this.productRepository.save(entity);
+        product.setId(id);
+        return productRepository.save(product);
     }
 
     @Override

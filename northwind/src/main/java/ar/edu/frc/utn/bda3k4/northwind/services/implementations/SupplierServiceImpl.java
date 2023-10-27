@@ -24,8 +24,7 @@ public class SupplierServiceImpl implements SupplierService {
         Supplier existingSupplier = this.supplierRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Supplier does not exist"));
         existingSupplier.update(entity);
-        this.supplierRepository.save(existingSupplier);
-        return existingSupplier;
+        return this.supplierRepository.save(existingSupplier);
     }
 
     @Override
