@@ -60,17 +60,17 @@ public class Supplier {
     @JsonIgnore
     private List<Product> products;
 
-    public void update(String companyName, String contactName, String contactTitle, String address, String city, String region, String postalCode, String country, String phone, String fax, String homePage){
-        this.companyName = companyName;
-        this.contactName = contactName;
-        this.contactTitle = contactTitle;
-        this.address = address;
-        this.city = city;
-        this.region = region;
-        this.postalCode = postalCode;
-        this.country = country;
-        this.phone = phone;
-        this.fax = fax;
-        this.homePage = homePage;
+    public void update(Supplier supplier){
+        this.companyName = supplier.companyName;
+        this.contactName = supplier.contactName;
+        this.contactTitle = supplier.contactTitle;
+        this.address = supplier.address;
+        this.city = supplier.city;
+        this.region = supplier.region;
+        this.postalCode = supplier.postalCode;
+        this.country = supplier.country;
+        this.phone = supplier.phone;
+        this.fax = supplier.fax;
+        this.homePage = supplier.homePage;
     }
 }

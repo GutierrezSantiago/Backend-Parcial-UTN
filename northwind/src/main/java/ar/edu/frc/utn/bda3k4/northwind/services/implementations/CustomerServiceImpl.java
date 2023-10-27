@@ -25,28 +25,17 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer update(String id, Customer entity) {
         Customer customer = this.customerRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Customer not found"));
-        customer.setCompanyName(entity.getCompanyName());
-        customer.setContactName(entity.getContactName());
-        customer.setContactTitle(entity.getContactTitle());
-        customer.setAddress(entity.getAddress());
-        customer.setCity(entity.getCity());
-        customer.setRegion(entity.getRegion());
-        customer.setPostalCode(entity.getPostalCode());
-        customer.setCountry(entity.getCountry());
-        customer.setPhone(entity.getPhone());
-        customer.setFax(entity.getFax());
+        customer.update(entity);
         return this.customerRepository.save(customer);
 
     }
 
     @Override
     public Customer delete(String s) {
-        Customer customer = this.customerRepository.findById(s).orElse(null);
-        if(customer != null){
-            this.customerRepository.delete(customer);
-            return customer;
-        }
-        throw new IllegalArgumentException("Customer not found");
+        Customer customer = this.customerRepository.findById(s).orElseThrow(()->
+                new IllegalArgumentException("Customer not found"));
+        this.customerRepository.delete(customer);
+        return customer;
     }
 
     @Override

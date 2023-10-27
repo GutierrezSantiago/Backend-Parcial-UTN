@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "Product")
+@Table(name = "Products")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
@@ -42,7 +42,7 @@ public class Product {
     Integer reorderLevel;
 
     @Column(name = "Discontinued")
-    boolean discontinued;
+    Boolean discontinued;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "SupplierID")
@@ -55,6 +55,16 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<OrderDetail> orderDetails;
+
+    public void update(Product product) {
+        this.name = product.getName();
+        this.quantityPerUnit = product.getQuantityPerUnit();
+        this.unitPrice = product.getUnitPrice();
+        this.unitsInStock = product.getUnitsInStock();
+        this.unitsOnOrder = product.getUnitsOnOrder();
+        this.reorderLevel = product.getReorderLevel();
+        this.discontinued = product.getDiscontinued();
+    }
 }
 
 

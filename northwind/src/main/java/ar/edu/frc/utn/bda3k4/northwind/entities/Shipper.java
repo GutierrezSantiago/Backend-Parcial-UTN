@@ -32,4 +32,9 @@ public class Shipper {
     @OneToMany(mappedBy = "shipper", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Order> orders;
+
+    public void update(Shipper shipper) {
+        this.companyName = shipper.getCompanyName();
+        this.phone = shipper.getPhone();
+    }
 }

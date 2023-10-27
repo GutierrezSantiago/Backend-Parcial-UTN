@@ -25,8 +25,7 @@ public class ShipperServiceImpl implements ShipperService {
     public Shipper update(Integer id, Shipper entity) {
         Shipper shipper = this.shipperRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Shipper not found"));
-        shipper.setCompanyName(entity.getCompanyName());
-        shipper.setPhone(entity.getPhone());
+        shipper.update(entity);
         return this.shipperRepository.save(shipper);
     }
 

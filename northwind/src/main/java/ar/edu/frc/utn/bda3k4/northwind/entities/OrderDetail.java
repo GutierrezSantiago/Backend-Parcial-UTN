@@ -46,4 +46,10 @@ public class OrderDetail {
         this.quantity = quantity;
         this.discount = discount;
     }
+
+    public void update(OrderDetail orderDetail) {
+        this.unitPrice = orderDetail.unitPrice;
+        this.quantity = orderDetail.quantity;
+        this.discount = orderDetail.discount;
+    }
 }

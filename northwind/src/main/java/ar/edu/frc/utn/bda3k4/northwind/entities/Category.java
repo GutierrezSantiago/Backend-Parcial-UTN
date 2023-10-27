@@ -35,4 +35,10 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Product> products;
+
+    public void update(Category entity) {
+        this.name = entity.getName();
+        this.description = entity.getDescription();
+        this.picture = entity.getPicture();
+    }
 }

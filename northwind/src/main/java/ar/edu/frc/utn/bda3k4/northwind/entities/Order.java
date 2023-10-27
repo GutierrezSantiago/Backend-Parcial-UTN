@@ -72,4 +72,17 @@ public class Order {
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<OrderDetail> orderDetails;
+
+    public void update(Order order) {
+        this.orderDate = order.orderDate;
+        this.requiredDate = order.requiredDate;
+        this.shippedDate = order.shippedDate;
+        this.freight = order.freight;
+        this.shipName = order.shipName;
+        this.shipAddress = order.shipAddress;
+        this.shipCity = order.shipCity;
+        this.shipRegion = order.shipRegion;
+        this.shipPostalCode = order.shipPostalCode;
+        this.shipCountry = order.shipCountry;
+    }
 }

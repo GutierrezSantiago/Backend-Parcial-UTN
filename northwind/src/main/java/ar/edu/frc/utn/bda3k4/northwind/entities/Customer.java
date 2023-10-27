@@ -65,4 +65,17 @@ public class Customer {
         this.phone = phone;
         this.fax = fax;
     }
+
+    public void update(Customer customer){
+        this.companyName = customer.getCompanyName();
+        this.contactName = customer.getContactName();
+        this.contactTitle = customer.getContactTitle();
+        this.address = customer.getAddress();
+        this.city = customer.getCity();
+        this.region = customer.getRegion();
+        this.postalCode = customer.getPostalCode();
+        this.country = customer.getCountry();
+        this.phone = customer.getPhone();
+        this.fax = customer.getFax();
+    }
 }
