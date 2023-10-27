@@ -30,6 +30,7 @@ public class CustomerUpdateRequest {
 
     public Customer toCustomer() {
         return new Customer(
+                null,
                 companyName,
                 contactName,
                 contactTitle,
@@ -39,8 +40,7 @@ public class CustomerUpdateRequest {
                 postalCode,
                 country,
                 phone,
-                fax,
-                null
+                fax
         );
     }
 }

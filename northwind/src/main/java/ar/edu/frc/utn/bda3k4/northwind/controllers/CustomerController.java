@@ -19,7 +19,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    // TODO: CHEQUEAR
     @GetMapping
     public ResponseEntity<Object> findAll() {
         try {
@@ -27,7 +26,6 @@ public class CustomerController {
                     .stream()
                     .map(CustomerResponse::from)
                     .toList();
-
             return ResponseEntity.ok(customers);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.noContent().build();
@@ -35,11 +33,12 @@ public class CustomerController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody CustomerCreateRequest aRequest) {
         try {
             val customer = customerService.add(aRequest.toCustomer());
-            return ResponseEntity.ok(customer);
+            return ResponseEntity.ok(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
@@ -51,7 +50,7 @@ public class CustomerController {
     public ResponseEntity<Object> update(@PathVariable String id, @RequestBody CustomerUpdateRequest aRequest) {
         try {
             val customer = customerService.update(id, aRequest.toCustomer());
-            return ResponseEntity.accepted().body(customer);
+            return ResponseEntity.accepted().body(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
@@ -63,7 +62,6 @@ public class CustomerController {
     public ResponseEntity<Object> findOne(@PathVariable String id) {
         try {
             Customer customer = customerService.findById(id);
-
             return ResponseEntity.ok(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -76,7 +74,7 @@ public class CustomerController {
     public ResponseEntity<Object> delete(@PathVariable String id) {
         try {
             Customer customer = customerService.delete(id);
-            return ResponseEntity.ok(customer);
+            return ResponseEntity.ok(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

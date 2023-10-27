@@ -1,15 +1,11 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities.response;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.OrderDetail;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-
+@Builder
 public class OrderDetailResponse {
     private Integer orderId;
     private Integer productId;
@@ -17,11 +13,13 @@ public class OrderDetailResponse {
     private Integer quantity;
     private Double discount;
 
-    public OrderDetailResponse(OrderDetail detail){
-        orderId = detail.getOrderId();
-        productId = detail.getProductId();
-        unitPrice = detail.getUnitPrice();
-        quantity = detail.getQuantity();
-        discount = detail.getDiscount();
+    public static OrderDetailResponse from(OrderDetail aOrderDetail) {
+        return OrderDetailResponse.builder()
+                .orderId(aOrderDetail.getOrderId())
+                .productId(aOrderDetail.getProductId())
+                .unitPrice(aOrderDetail.getUnitPrice())
+                .quantity(aOrderDetail.getQuantity())
+                .discount(aOrderDetail.getDiscount())
+                .build();
     }
 }

@@ -1,4 +1,4 @@
-package ar.edu.frc.utn.bda3k4.northwind.entities.request;
+package ar.edu.frc.utn.bda3k4.northwind.entities.request.create;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.OrderDetail;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 
-public class OrderDetailRequest {
+public class OrderDetailCreateRequest {
     @NotBlank(message = "orderId is mandatory")
     private Integer orderId;
     @NotBlank(message = "productId is mandatory")

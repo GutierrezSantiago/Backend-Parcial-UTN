@@ -52,7 +52,8 @@ public class Customer {
     @JsonIgnore
     private List<Order> orders;
 
-    public Customer(String id, String companyName, String contactName, String contactTitle, String address, String city, String region, String postalCode, String country, String phone, String fax) {
+    public Customer(String id, String companyName, String contactName, String contactTitle, String address,
+                    String city, String region, String postalCode, String country, String phone, String fax) {
         this.id = id;
         this.companyName = companyName;
         this.contactName = contactName;

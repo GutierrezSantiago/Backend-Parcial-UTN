@@ -72,12 +72,9 @@ public class Employee {
     @Column(name = "Notes")
     private String notes;
 
-    @Column(name = "ReportsTo")
-    private Integer reportsTo;
-
     @ManyToOne
     @JoinColumn(name = "ReportsTo")
-    private Employee superior;
+    private Employee reportsTo;
 
     @Column(name = "PhotoPath")
     private String photoPath;
