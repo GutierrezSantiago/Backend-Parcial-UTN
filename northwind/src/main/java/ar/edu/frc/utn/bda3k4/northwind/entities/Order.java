@@ -74,9 +74,11 @@ public class Order {
     private List<OrderDetail> orderDetails;
 
     public void update(Order order) {
+        /*NO SE ACTUALIZA CUSTOMER NI EMPLOYEE*/
         this.orderDate = order.orderDate;
         this.requiredDate = order.requiredDate;
-        this.shippedDate = order.shippedDate;
+        this.shippedDate = order.shippedDate; // SHIPPEDDATE PODRÍA LLEGAR A CAMBIAR O A SER NULL SI SE CANCELA EL ENVÍO
+        this.shipper = order.shipper; // SHIPPER PODRÍA LLEGAR A CAMBIAR O A SER NULL SI SE CANCELA EL ENVÍO
         this.freight = order.freight;
         this.shipName = order.shipName;
         this.shipAddress = order.shipAddress;
@@ -84,5 +86,21 @@ public class Order {
         this.shipRegion = order.shipRegion;
         this.shipPostalCode = order.shipPostalCode;
         this.shipCountry = order.shipCountry;
+    }
+
+    public Order(Integer id, LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, Double freight,
+                 String shipName, String shipAddress, String shipCity, String shipRegion, String shipPostalCode,
+                 String shipCountry) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.requiredDate = requiredDate;
+        this.shippedDate = shippedDate;
+        this.freight = freight;
+        this.shipName = shipName;
+        this.shipAddress = shipAddress;
+        this.shipCity = shipCity;
+        this.shipRegion = shipRegion;
+        this.shipPostalCode = shipPostalCode;
+        this.shipCountry = shipCountry;
     }
 }

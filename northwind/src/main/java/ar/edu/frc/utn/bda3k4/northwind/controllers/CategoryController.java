@@ -1,8 +1,8 @@
 package ar.edu.frc.utn.bda3k4.northwind.controllers;
 
+import ar.edu.frc.utn.bda3k4.northwind.entities.Category;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.CategoryRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.CategoryResponse;
-import ar.edu.frc.utn.bda3k4.northwind.entities.response.CustomerResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CategoryService;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class CategoryController {
             val category = categoryService.add(aRequest.toCategory());
             return ResponseEntity.ok(CategoryResponse.from(category));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -49,7 +49,19 @@ public class CategoryController {
             val category = categoryService.update(id, aRequest.toCategory());
             return ResponseEntity.accepted().body(CategoryResponse.from(category));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Integer id) {
+        try {
+            Category category = categoryService.delete(id);
+            return ResponseEntity.accepted().body(CategoryResponse.from(category));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

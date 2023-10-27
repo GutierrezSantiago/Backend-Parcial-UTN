@@ -40,7 +40,7 @@ public class OrderDetailController {
             OrderDetail detail = orderDetailService.add(aRequest.toOrderDetail());
             return ResponseEntity.ok(OrderDetailResponse.from(detail));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -54,7 +54,7 @@ public class OrderDetailController {
                     .update(new OrderDetailPK(orderId, productId), aRequest.toOrderDetail());
             return ResponseEntity.accepted().body(OrderDetailResponse.from(detail));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

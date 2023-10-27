@@ -1,14 +1,16 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities.response;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Product;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class ProductResponse {
+    private Integer id;
     private String name;
+    private Integer supplierId;
+    private Integer categoryId;
     private String quantityPerUnit;
     private Double unitPrice;
     private Integer unitsInStock;
@@ -18,7 +20,10 @@ public class ProductResponse {
 
     public static ProductResponse from(Product aProduct) {
         return ProductResponse.builder()
+                .id(aProduct.getId())
                 .name(aProduct.getName())
+                .supplierId(aProduct.getSupplier().getId())
+                .categoryId(aProduct.getCategory().getId())
                 .quantityPerUnit(aProduct.getQuantityPerUnit())
                 .unitPrice(aProduct.getUnitPrice())
                 .unitsInStock(aProduct.getUnitsInStock())

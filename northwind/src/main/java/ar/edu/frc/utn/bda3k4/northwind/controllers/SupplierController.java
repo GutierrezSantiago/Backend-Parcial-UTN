@@ -1,10 +1,7 @@
 package ar.edu.frc.utn.bda3k4.northwind.controllers;
 
-import ar.edu.frc.utn.bda3k4.northwind.entities.Shipper;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Supplier;
-import ar.edu.frc.utn.bda3k4.northwind.entities.request.ShipperRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.SupplierRequest;
-import ar.edu.frc.utn.bda3k4.northwind.entities.response.ShipperResponse;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.SupplierResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.SupplierService;
 import lombok.val;
@@ -41,7 +38,7 @@ public class SupplierController {
             Supplier supplier = supplierService.add(aRequest.toSupplier());
             return ResponseEntity.ok(SupplierResponse.from(supplier));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -53,7 +50,7 @@ public class SupplierController {
             Supplier supplier = supplierService.update(id, aRequest.toSupplier());
             return ResponseEntity.accepted().body(SupplierResponse.from(supplier));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -65,7 +62,7 @@ public class SupplierController {
             Supplier supplier = supplierService.delete(id);
             return ResponseEntity.accepted().body(SupplierResponse.from(supplier));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

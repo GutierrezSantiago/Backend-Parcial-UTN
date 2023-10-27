@@ -45,12 +45,13 @@ public class ProductController {
         try {
             Category category = categoryService.findById(aRequest.getCategoryId());
             Supplier supplier = supplierService.findById(aRequest.getSupplierId());
-            Product product = productService.add(aRequest.toProduct());
+            Product product = aRequest.toProduct();
             product.setCategory(category);
             product.setSupplier(supplier);
+            product = productService.add(product);
             return ResponseEntity.ok(ProductResponse.from(product));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // PROBAR
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -62,7 +63,7 @@ public class ProductController {
             Product product = productService.update(id, aRequest.toProduct());
             return ResponseEntity.accepted().body(ProductResponse.from(product));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -74,7 +75,7 @@ public class ProductController {
             Product product = productService.delete(id);
             return ResponseEntity.accepted().body(ProductResponse.from(product));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

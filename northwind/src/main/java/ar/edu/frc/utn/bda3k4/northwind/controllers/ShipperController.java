@@ -38,7 +38,7 @@ public class ShipperController {
             Shipper shipper = shipperService.add(aRequest.toShipper());
             return ResponseEntity.ok(ShipperResponse.from(shipper));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -50,7 +50,7 @@ public class ShipperController {
             Shipper shipper = shipperService.update(id, aRequest.toShipper());
             return ResponseEntity.accepted().body(ShipperResponse.from(shipper));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -62,7 +62,7 @@ public class ShipperController {
             Shipper shipper = shipperService.delete(id);
             return ResponseEntity.accepted().body(ShipperResponse.from(shipper));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

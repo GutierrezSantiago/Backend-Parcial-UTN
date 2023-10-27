@@ -28,15 +28,14 @@ public class EmployeeController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody EmployeeRequest aRequest) {
-        Employee newEmployee = aRequest.toEmployee();
         try {
+            Employee newEmployee = aRequest.toEmployee();
             if (aRequest.getReportsTo() != null){
                 Employee reportsTo = employeeService.findById(aRequest.getReportsTo());
                 newEmployee.setReportsTo(reportsTo);
@@ -44,7 +43,7 @@ public class EmployeeController {
             newEmployee = employeeService.add(newEmployee);
             return ResponseEntity.ok(EmployeeResponse.from(newEmployee));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -52,8 +51,8 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody EmployeeRequest aRequest) {
-        Employee modifiedEmployee = aRequest.toEmployee();
         try {
+            Employee modifiedEmployee = aRequest.toEmployee();
             if (aRequest.getReportsTo() != null){
                 Employee reportsTo = employeeService.findById(aRequest.getReportsTo());
                 modifiedEmployee.setReportsTo(reportsTo);
@@ -61,7 +60,7 @@ public class EmployeeController {
             modifiedEmployee = employeeService.update(id, modifiedEmployee);
             return ResponseEntity.accepted().body(EmployeeResponse.from(modifiedEmployee));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

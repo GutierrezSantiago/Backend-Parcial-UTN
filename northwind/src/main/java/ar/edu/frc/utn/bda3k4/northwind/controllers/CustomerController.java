@@ -40,7 +40,7 @@ public class CustomerController {
             val customer = customerService.add(aRequest.toCustomer());
             return ResponseEntity.ok(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -52,7 +52,7 @@ public class CustomerController {
             val customer = customerService.update(id, aRequest.toCustomer());
             return ResponseEntity.accepted().body(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
