@@ -56,6 +56,17 @@ public class Product {
     @JsonIgnore
     private List<OrderDetail> orderDetails;
 
+    public Product(Integer id, String name, String quantityPerUnit, Double unitPrice, Integer unitsInStock, Integer unitsOnOrder, Integer reorderLevel, Boolean discontinued) {
+        this.id = id;
+        this.name = name;
+        this.quantityPerUnit = quantityPerUnit;
+        this.unitPrice = unitPrice;
+        this.unitsInStock = unitsInStock;
+        this.unitsOnOrder = unitsOnOrder;
+        this.reorderLevel = reorderLevel;
+        this.discontinued = discontinued;
+    }
+
     public void update(Product product) {
         this.name = product.getName();
         this.quantityPerUnit = product.getQuantityPerUnit();
