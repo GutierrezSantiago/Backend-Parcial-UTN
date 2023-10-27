@@ -46,8 +46,8 @@ public class OrderDetailController {
         }
     }
 
-    @PutMapping("/{orderId}/{productId}")
-    public ResponseEntity<Object> update(@PathVariable Integer orderId, @PathVariable Integer productId,
+    @PutMapping("/{orderId}/")
+    public ResponseEntity<Object> update(@PathVariable Integer orderId, @RequestParam Integer productId,
                                          @RequestBody OrderDetailUpdateRequest aRequest) {
         try {
             OrderDetail detail = orderDetailService
@@ -60,8 +60,8 @@ public class OrderDetailController {
         }
     }
 
-    @GetMapping("/{orderId}/{productId}")
-    public ResponseEntity<Object> findOne(@PathVariable Integer orderId, @PathVariable Integer productId) {
+    @GetMapping("/{orderId}/")
+    public ResponseEntity<Object> findOne(@PathVariable Integer orderId, @RequestParam Integer productId) {
         try {
             OrderDetail detail = orderDetailService.findById(new OrderDetailPK(orderId, productId));
             return ResponseEntity.ok(OrderDetailResponse.from(detail));
@@ -72,8 +72,8 @@ public class OrderDetailController {
         }
     }
 
-    @DeleteMapping("/{orderId}/{productId}")
-    public ResponseEntity<Object> delete(@PathVariable Integer orderId, @PathVariable Integer productId) {
+    @DeleteMapping("/{orderId}/")
+    public ResponseEntity<Object> delete(@PathVariable Integer orderId, @RequestParam Integer productId) {
         try {
             OrderDetail detail = orderDetailService.delete(new OrderDetailPK(orderId, productId));
             return ResponseEntity.ok(OrderDetailResponse.from(detail));
