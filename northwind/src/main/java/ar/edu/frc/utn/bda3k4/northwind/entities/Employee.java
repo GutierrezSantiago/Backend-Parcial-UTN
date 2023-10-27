@@ -97,9 +97,32 @@ public class Employee {
         country = employee.getCountry();
         homePhone = employee.getHomePhone();
         extension = employee.getExtension();
-        photo = employee.getPhoto();
         notes = employee.getNotes();
         reportsTo = employee.getReportsTo();
         photoPath = employee.getPhotoPath();
+        if(employee.getPhoto() != null){photo = employee.getPhoto();}
     }
+
+    public Employee(String lastName, String firstName, String title, String titleOfCourtesy,
+                    LocalDate birthDate, LocalDate hireDate, String address, String city,
+                    String region, String postalCode, String country, String homePhone,
+                    String extension, byte[] photo, String notes, String photoPath) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.title = title;
+        this.titleOfCourtesy = titleOfCourtesy;
+        this.birthDate = birthDate;
+        this.hireDate = hireDate;
+        this.address = address;
+        this.city = city;
+        this.region = region;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.homePhone = homePhone;
+        this.extension = extension;
+        this.photo = photo;
+        this.notes = notes;
+        this.photoPath = photoPath;
+    }
+
 }

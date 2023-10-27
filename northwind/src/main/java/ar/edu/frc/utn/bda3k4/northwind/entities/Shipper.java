@@ -37,4 +37,9 @@ public class Shipper {
         this.companyName = shipper.getCompanyName();
         this.phone = shipper.getPhone();
     }
+
+    public Shipper(String companyName, String phone) {
+        this.companyName = companyName;
+        this.phone = phone;
+    }
 }

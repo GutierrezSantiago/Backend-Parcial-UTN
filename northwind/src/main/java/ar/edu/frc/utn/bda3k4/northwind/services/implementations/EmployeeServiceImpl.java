@@ -3,9 +3,11 @@ package ar.edu.frc.utn.bda3k4.northwind.services.implementations;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Employee;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.EmployeeRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.EmployeeService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 

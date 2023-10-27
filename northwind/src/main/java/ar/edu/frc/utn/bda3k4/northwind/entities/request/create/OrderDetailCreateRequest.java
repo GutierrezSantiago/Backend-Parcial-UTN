@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-
 public class OrderDetailCreateRequest {
     @NotBlank(message = "orderId is mandatory")
     private Integer orderId;
