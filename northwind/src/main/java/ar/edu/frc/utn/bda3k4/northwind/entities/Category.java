@@ -21,24 +21,31 @@ public class Category {
             pkColumnName = "name", valueColumnName = "seq",
             pkColumnValue="Categories",
             initialValue=1, allocationSize=1)
-    Integer id;
+    private Integer id;
 
     @Column(name = "CategoryName")
-    String name;
+    private String name;
 
     @Column(name = "Description")
-    String description;
+    private String description;
 
     @Column(name = "Picture")
-    byte[] picture;
+    private byte[] picture;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Product> products;
 
+    public Category(Integer id, String name, String description, byte[] picture) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.picture = picture;
+    }
+
     public void update(Category entity) {
         this.name = entity.getName();
         this.description = entity.getDescription();
-        this.picture = entity.getPicture();
+        if (entity.getPicture() != null) this.picture = entity.getPicture();
     }
 }

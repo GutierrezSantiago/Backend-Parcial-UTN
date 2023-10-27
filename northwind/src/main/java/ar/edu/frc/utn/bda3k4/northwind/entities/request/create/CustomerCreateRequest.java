@@ -42,8 +42,7 @@ public class CustomerCreateRequest {
                 postalCode,
                 country,
                 phone,
-                fax,
-                null
+                fax
         );
     }
 }

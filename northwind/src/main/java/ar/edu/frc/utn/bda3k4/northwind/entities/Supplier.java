@@ -21,40 +21,40 @@ public class Supplier {
             pkColumnName = "name", valueColumnName = "seq",
             pkColumnValue="Suppliers",
             initialValue=1, allocationSize=1)
-    Integer id;
+    private Integer id;
 
     @Column(name = "CompanyName")
-    String companyName;
+    private String companyName;
 
     @Column(name = "ContactName")
-    String contactName;
+    private String contactName;
 
     @Column(name = "ContactTitle")
-    String contactTitle;
+    private String contactTitle;
 
     @Column(name = "Address")
-    String address;
+    private String address;
 
     @Column(name = "City")
-    String city;
+    private String city;
 
     @Column(name = "Region")
-    String region;
+    private String region;
 
     @Column(name = "PostalCode")
-    String postalCode;
+    private String postalCode;
 
     @Column(name = "Country")
-    String country;
+    private String country;
 
     @Column(name = "Phone")
-    String phone;
+    private String phone;
 
     @Column(name = "Fax")
-    String fax;
+    private String fax;
 
     @Column(name = "HomePage")
-    String homePage;
+    private String homePage;
 
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
     @JsonIgnore

@@ -21,36 +21,36 @@ public class Product {
             pkColumnName = "name", valueColumnName = "seq",
             pkColumnValue="Products",
             initialValue=1, allocationSize=1)
-    Integer id;
+    private Integer id;
 
     @Column(name = "ProductName")
-    String name;
+    private String name;
 
     @Column(name = "QuantityPerUnit")
-    String quantityPerUnit;
+    private String quantityPerUnit;
 
     @Column(name = "UnitPrice")
-    Double unitPrice;
+    private Double unitPrice;
 
     @Column(name = "UnitsInStock")
-    Integer unitsInStock;
+    private Integer unitsInStock;
 
     @Column(name = "UnitsOnOrder")
-    Integer unitsOnOrder;
+    private Integer unitsOnOrder;
 
     @Column(name = "ReorderLevel")
-    Integer reorderLevel;
+    private Integer reorderLevel;
 
     @Column(name = "Discontinued")
-    Boolean discontinued;
+    private Boolean discontinued;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "SupplierID")
-    Supplier supplier;
+    private Supplier supplier;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CategoryID")
-    Category category;
+    private Category category;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore
