@@ -1,12 +1,12 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
-import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeConverter;
+import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeAttributeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -25,16 +25,16 @@ public class Order {
     private Integer id;
 
     @Column(name = "OrderDate")
-    @Convert(converter = LocalDateTimeConverter.class)
-    private LocalDateTime orderDate;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDate orderDate;
 
     @Column(name = "RequiredDate")
-    @Convert(converter = LocalDateTimeConverter.class)
-    private LocalDateTime requiredDate;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDate requiredDate;
 
     @Column(name = "ShippedDate")
-    @Convert(converter = LocalDateTimeConverter.class)
-    private LocalDateTime shippedDate;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDate shippedDate;
 
     @Column(name = "Freight")
     private Double freight;

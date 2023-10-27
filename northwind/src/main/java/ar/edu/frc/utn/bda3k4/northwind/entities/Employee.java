@@ -1,13 +1,13 @@
 package ar.edu.frc.utn.bda3k4.northwind.entities;
 
-import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeConverter;
+import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeAttributeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -37,13 +37,13 @@ public class Employee {
     @Column(name = "TitleOfCourtesy")
     private String titleOfCourtesy;
 
-    @Convert(converter = LocalDateTimeConverter.class)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Column(name = "BirthDate")
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
 
-    @Convert(converter = LocalDateTimeConverter.class)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Column(name = "HireDate")
-    private LocalDateTime hireDate;
+    private LocalDate hireDate;
 
     @Column(name = "Address")
     private String address;

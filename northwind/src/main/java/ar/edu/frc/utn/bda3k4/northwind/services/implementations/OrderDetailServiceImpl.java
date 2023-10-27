@@ -28,12 +28,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public OrderDetail add(OrderDetail entity) {
         Order order = this.orderService.findById(entity.getOrderId());
         Product product = this.productService.findById(entity.getProductId());
+        entity.setOrder(order);
+        entity.setProduct(product);
         return this.orderDetailRepository.save(entity);
     }
 
     public OrderDetail update(OrderDetailPK id, OrderDetail entity) {
         OrderDetail orderDetail = this.orderDetailRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró el OrderDetail con id suministrado"));
+                .orElseThrow(() -> new IllegalArgumentException("No OrderDetail found"));
         orderDetail.setUnitPrice(entity.getUnitPrice());
         orderDetail.setQuantity(entity.getQuantity());
         orderDetail.setDiscount(entity.getDiscount());
@@ -41,17 +43,20 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     public OrderDetail delete(OrderDetailPK orderDetailPK) {
-        OrderDetail orderDetail = this.orderDetailRepository.findById(orderDetailPK).orElse(null);
-        if (orderDetail != null) {this.orderDetailRepository.delete(orderDetail);}
+        OrderDetail orderDetail = this.orderDetailRepository.findById(orderDetailPK)
+                .orElseThrow(() -> new IllegalArgumentException("No OrderDetail found"));
+        this.orderDetailRepository.delete(orderDetail);
         return orderDetail;
     }
 
     public OrderDetail findById(OrderDetailPK orderDetailPK) {
         return this.orderDetailRepository.findById(orderDetailPK).orElseThrow(
-                () -> new IllegalArgumentException("No se encontró el OrderDetail con id suministrado"));
+                () -> new IllegalArgumentException("No OrderDetail found"));
     }
 
     public List<OrderDetail> findAll() {
-        return this.orderDetailRepository.findAll();
+        List<OrderDetail> details = this.orderDetailRepository.findAll();
+        if (details.isEmpty()) {throw new IllegalArgumentException("No OrderDetails found");}
+        return details;
     }
 }

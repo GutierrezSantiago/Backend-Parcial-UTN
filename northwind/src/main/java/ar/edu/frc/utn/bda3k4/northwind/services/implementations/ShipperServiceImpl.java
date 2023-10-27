@@ -31,7 +31,8 @@ public class ShipperServiceImpl implements ShipperService {
 
     @Override
     public Shipper delete(Integer id) {
-        Shipper shipper = this.shipperRepository.findById(id).orElse(null);
+        Shipper shipper = this.shipperRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("Shipper not found"));
         if(shipper != null){
             this.shipperRepository.delete(shipper);
             return shipper;
@@ -47,6 +48,8 @@ public class ShipperServiceImpl implements ShipperService {
 
     @Override
     public List<Shipper> findAll() {
-        return null;
+        List<Shipper> shippers = this.shipperRepository.findAll();
+        if(shippers.isEmpty()){throw new IllegalArgumentException("No shippers found");}
+        return shippers;
     }
 }

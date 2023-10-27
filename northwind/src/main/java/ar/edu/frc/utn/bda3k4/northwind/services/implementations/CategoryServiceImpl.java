@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category delete(Integer id) {
         Category category = this.categoryRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(()-> new IllegalArgumentException("Category not found"));
         if(category != null){
             this.categoryRepository.delete(category);
             return category;
@@ -50,6 +50,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findAll() {
-        return this.categoryRepository.findAll();
+        List<Category> categories = this.categoryRepository.findAll();
+        if(categories.isEmpty()){throw new IllegalArgumentException("No categories found");}
+        return categories;
     }
 }

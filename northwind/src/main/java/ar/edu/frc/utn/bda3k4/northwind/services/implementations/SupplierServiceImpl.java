@@ -30,7 +30,8 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Supplier delete(Integer id) {
-        Supplier supplier = this.supplierRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Supplier does not exist"));
+        Supplier supplier = this.supplierRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Supplier does not exist"));
         this.supplierRepository.delete(supplier);
         return supplier;
 
@@ -44,6 +45,8 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public List<Supplier> findAll() {
-        return this.supplierRepository.findAll();
+        List<Supplier> suppliers = this.supplierRepository.findAll();
+        if(suppliers.isEmpty()){throw new IllegalArgumentException("No suppliers found");}
+        return suppliers;
     }
 }
