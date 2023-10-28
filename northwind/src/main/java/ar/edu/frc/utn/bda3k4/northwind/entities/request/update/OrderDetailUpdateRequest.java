@@ -2,10 +2,13 @@ package ar.edu.frc.utn.bda3k4.northwind.entities.request.update;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.OrderDetail;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetailUpdateRequest {
     @NotBlank(message = "unitPrice is mandatory")
     private Double unitPrice;

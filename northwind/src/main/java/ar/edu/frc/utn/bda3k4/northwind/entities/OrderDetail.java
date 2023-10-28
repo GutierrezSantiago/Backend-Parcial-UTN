@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @IdClass(OrderDetailPK.class)
 public class OrderDetail {
-
     @Id
     @Column(name = "OrderId")
     private Integer orderId;

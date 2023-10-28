@@ -52,9 +52,9 @@ public class OrderDetailController {
         try {
             OrderDetail detail = orderDetailService
                     .update(new OrderDetailPK(orderId, productId), aRequest.toOrderDetail());
-            return ResponseEntity.accepted().body(OrderDetailResponse.from(detail));
+            return ResponseEntity.ok().body(OrderDetailResponse.from(detail));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
