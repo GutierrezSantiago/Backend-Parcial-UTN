@@ -97,7 +97,7 @@ public class CategoryControllerTest {
     void testDelete(){
         Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(CATEGORY));
         Assertions.assertEquals(
-                HttpStatus.OK,
+                HttpStatus.ACCEPTED,
                 categoryController.delete(1).getStatusCode()
         );
     }

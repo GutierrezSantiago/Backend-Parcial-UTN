@@ -101,7 +101,7 @@ public class SupplierControllerTest {
     void testDelete(){
         Mockito.when(supplierRepository.findById(1)).thenReturn(java.util.Optional.of(supplier));
         Assertions.assertEquals(
-                HttpStatus.OK,
+                HttpStatus.ACCEPTED,
                 supplierController.delete(1).getStatusCode()
         );
     }
