@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+
 public class ShipperControllerTest {
     private ShipperController shipperController;
     private ShipperRepository shipperRepository;
@@ -67,7 +69,8 @@ public class ShipperControllerTest {
 
     @Test
     void testAdd(){
-        Mockito.when(shipperRepository.save(shipper)).thenReturn(shipper);
+        Mockito.when(shipperRepository.save(any(Shipper.class))).thenReturn(shipper);
+        Mockito.when(shipperRepository.saveAndFlush(any(Shipper.class))).thenReturn(shipper);
         Assertions.assertEquals(
                 HttpStatus.CREATED,
                 shipperController.add(new ShipperRequest()).getStatusCode()
