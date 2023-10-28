@@ -1,8 +1,11 @@
 package ar.edu.frc.utn.bda3k4.northwind.services.implementations;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
+import ar.edu.frc.utn.bda3k4.northwind.entities.Order;
+import ar.edu.frc.utn.bda3k4.northwind.entities.Product;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.CustomerRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CustomerService;
+import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +14,12 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final ProductService productService;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, ProductService productService) {
         this.customerRepository = customerRepository;
+        this.productService = productService;
     }
 
     @Override
@@ -49,5 +55,13 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = this.customerRepository.findAll();
         if(customers.isEmpty()){throw new IllegalArgumentException("No customers found");}
         return customers;
+    }
+
+    @Override
+    public List<Order> findOrdersWithProduct(String customerID, Integer productID) {
+        Product product = productService.findById(productID);
+        List<Order> orders = this.customerRepository.findOrdersWithProduct(customerID, productID);
+        if(orders.isEmpty()){throw new IllegalArgumentException("No orders found");}
+        return orders;
     }
 }

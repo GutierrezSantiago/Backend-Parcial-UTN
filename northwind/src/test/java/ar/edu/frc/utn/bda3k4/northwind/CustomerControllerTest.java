@@ -5,7 +5,9 @@ import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.create.CustomerCreateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.update.CustomerUpdateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.CustomerRepository;
+import ar.edu.frc.utn.bda3k4.northwind.repositories.ProductRepository;
 import ar.edu.frc.utn.bda3k4.northwind.services.implementations.CustomerServiceImpl;
+import ar.edu.frc.utn.bda3k4.northwind.services.implementations.ProductServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class CustomerControllerTest {
     private CustomerController customerController;
     private CustomerRepository customerRepository;
+    private ProductRepository productRepository;
     private final Customer CUSTOMER = new Customer("AAAA", "Aluminio",
             "Maria Anders", "Sales Representative", "Obere Str. 57",
             "Berlin", null, "12209", "Germany", "030-0074321",
@@ -30,7 +33,9 @@ public class CustomerControllerTest {
     @BeforeEach
     public void setup() {
         customerRepository = Mockito.mock(CustomerRepository.class);
-        CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository);
+        productRepository = Mockito.mock(ProductRepository.class);
+        ProductServiceImpl productService = new ProductServiceImpl(productRepository);
+        CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository, productService);
         customerController = new CustomerController(customerService);
     }
 

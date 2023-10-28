@@ -6,14 +6,8 @@ import ar.edu.frc.utn.bda3k4.northwind.entities.Employee;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Order;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Shipper;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.OrderRequest;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.CustomerRepository;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.EmployeeRepository;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.OrderRepository;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.ShipperRepository;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.CustomerServiceImpl;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.EmployeeServiceImpl;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.OrderServiceImpl;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.ShipperServiceImpl;
+import ar.edu.frc.utn.bda3k4.northwind.repositories.*;
+import ar.edu.frc.utn.bda3k4.northwind.services.implementations.*;
 import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeAttributeConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +28,7 @@ public class OrderControllerTest {
     private ShipperRepository shipperRepository;
     private EmployeeRepository employeeRepository;
     private CustomerRepository customerRepository;
+    private ProductRepository productRepository;
     private LocalDateTimeAttributeConverter localDateTimeAttributeConverter = new LocalDateTimeAttributeConverter();
     private final Customer CUSTOMER = new Customer("AAAA", "Aluminio",
             "Maria Anders", "Sales Representative", "Obere Str. 57",
@@ -89,8 +84,10 @@ public class OrderControllerTest {
         customerRepository = Mockito.mock(CustomerRepository.class);
         shipperRepository = Mockito.mock(ShipperRepository.class);
         employeeRepository = Mockito.mock(EmployeeRepository.class);
+        productRepository = Mockito.mock(ProductRepository.class);
+        ProductServiceImpl productService = new ProductServiceImpl(productRepository);
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
-        CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository);
+        CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository, productService);
         ShipperServiceImpl shipperService = new ShipperServiceImpl(shipperRepository);
         EmployeeServiceImpl employeeService = new EmployeeServiceImpl(employeeRepository);
         orderController = new OrderController(orderService,

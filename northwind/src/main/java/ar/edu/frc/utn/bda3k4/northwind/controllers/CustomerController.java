@@ -4,6 +4,7 @@ import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.create.CustomerCreateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.update.CustomerUpdateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.CustomerResponse;
+import ar.edu.frc.utn.bda3k4.northwind.entities.response.OrderResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CustomerService;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
@@ -82,5 +83,19 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/{id}/orders/{productID}")
+    public ResponseEntity<Object> findOrdersWithProduct(@PathVariable String id, @PathVariable Integer productID) {
+        try {
+            val orders = customerService.findOrdersWithProduct(id, productID)
+                    .stream()
+                    .map(OrderResponse::from)
+                    .toList();
+            return ResponseEntity.ok(orders);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
 }
