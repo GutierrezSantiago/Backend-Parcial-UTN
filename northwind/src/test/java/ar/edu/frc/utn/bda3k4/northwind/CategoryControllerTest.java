@@ -79,7 +79,7 @@ public class CategoryControllerTest {
         Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(CATEGORY));
         Mockito.when(categoryRepository.save(CATEGORY)).thenReturn(CATEGORY);
         Assertions.assertEquals(
-                HttpStatus.OK,
+                HttpStatus.ACCEPTED,
                 categoryController.update(1, new CategoryRequest()).getStatusCode()
         );
     }
