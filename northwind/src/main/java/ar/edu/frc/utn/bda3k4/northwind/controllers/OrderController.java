@@ -36,6 +36,7 @@ public class OrderController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

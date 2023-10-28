@@ -1,7 +1,10 @@
 package ar.edu.frc.utn.bda3k4.northwind;
 
 import ar.edu.frc.utn.bda3k4.northwind.controllers.OrderController;
+import ar.edu.frc.utn.bda3k4.northwind.entities.Customer;
+import ar.edu.frc.utn.bda3k4.northwind.entities.Employee;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Order;
+import ar.edu.frc.utn.bda3k4.northwind.entities.Shipper;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.OrderRequest;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.CustomerRepository;
 import ar.edu.frc.utn.bda3k4.northwind.repositories.EmployeeRepository;
@@ -22,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @SpringBootTest
 public class OrderControllerTest {
     private OrderController orderController;
@@ -30,6 +35,32 @@ public class OrderControllerTest {
     private EmployeeRepository employeeRepository;
     private CustomerRepository customerRepository;
     private LocalDateTimeAttributeConverter localDateTimeAttributeConverter = new LocalDateTimeAttributeConverter();
+    private final Customer CUSTOMER = new Customer("AAAA", "Aluminio",
+            "Maria Anders", "Sales Representative", "Obere Str. 57",
+            "Berlin", null, "12209", "Germany", "030-0074321",
+            "030-0076545");
+    private final Employee EMPLOYEE = new Employee(
+            1,
+            "Davolio",
+            "Nancy",
+            "Sales Representative",
+            "Ms.",
+            localDateTimeAttributeConverter.convertToEntityAttribute("1948-12-08"),
+            localDateTimeAttributeConverter.convertToEntityAttribute("1960-05-01"),
+            "507 - 20th Ave. E. Apt. 2A",
+            "Seattle",
+            "WA",
+            "98122",
+            "USA",
+            "(206) 555-9857",
+            "5467",
+            null,
+            "Education includes a BA in psychology from Colorado State University in 1970.  She also completed \"The Art of the Cold Call.\"  Nancy is a member of Toastmasters International.",
+            null,
+            "http://accweb/emmployees/davolio.bmp",
+            null
+    );
+    private final Shipper SHIPPER = new Shipper(1, "Speedy Express", "(503) 555-9831", null);
     private final Order ORDER = new Order(
             1,
             localDateTimeAttributeConverter.convertToEntityAttribute("1948-12-08"),
@@ -42,11 +73,15 @@ public class OrderControllerTest {
             "ShipRegion",
             "ShipPostalCode",
             "ShipCountry",
-            null,
-            null,
-            null,
+            CUSTOMER,
+            EMPLOYEE,
+            SHIPPER,
             null
     );
+
+
+
+
 
     @BeforeEach
     void setup(){
@@ -104,7 +139,8 @@ public class OrderControllerTest {
 
     @Test
     void testAdd(){
-        Mockito.when(orderRepository.save(ORDER)).thenReturn(ORDER);
+        Mockito.when(orderRepository.save(any(Order.class))).thenReturn(ORDER);
+        Mockito.when(orderRepository.saveAndFlush(any(Order.class))).thenReturn(ORDER);
         Assertions.assertEquals(
                 HttpStatus.CREATED,
                 orderController.add(new OrderRequest()).getStatusCode()
