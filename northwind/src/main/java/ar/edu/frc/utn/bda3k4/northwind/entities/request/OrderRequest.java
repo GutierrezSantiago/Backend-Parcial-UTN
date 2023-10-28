@@ -3,11 +3,15 @@ package ar.edu.frc.utn.bda3k4.northwind.entities.request;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Order;
 import ar.edu.frc.utn.bda3k4.northwind.support.LocalDateTimeAttributeConverter;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderRequest {
     @NotBlank(message = "Customer Id is mandatory")
     private String customerId;

@@ -8,6 +8,7 @@ import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.EmployeeService;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.OrderService;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.ShipperService;
 import lombok.val;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,6 @@ public class OrderController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -52,7 +52,7 @@ public class OrderController {
             order.setShipper(shipper);
             order.setEmployee(employee);
             order = orderService.add(order);
-            return ResponseEntity.ok(OrderResponse.from(order));
+            return ResponseEntity.status(HttpStatus.CREATED).body(OrderResponse.from(order));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -69,6 +69,7 @@ public class OrderController {
             Order order = orderService.update(id, modifications);
             return ResponseEntity.accepted().body(OrderResponse.from(order));
         } catch (IllegalArgumentException e) {
+            if(e.getMessage() == "Order not found") return ResponseEntity.notFound().build();
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
