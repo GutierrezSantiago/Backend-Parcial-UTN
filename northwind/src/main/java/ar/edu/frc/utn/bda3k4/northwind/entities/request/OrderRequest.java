@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequest {
     @NotBlank(message = "Customer Id is mandatory")

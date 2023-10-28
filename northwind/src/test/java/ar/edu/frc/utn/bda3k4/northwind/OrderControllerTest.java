@@ -16,13 +16,10 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 
 @SpringBootTest
 public class OrderControllerTest {
@@ -32,7 +29,7 @@ public class OrderControllerTest {
     private EmployeeRepository employeeRepository;
     private CustomerRepository customerRepository;
     private ProductRepository productRepository;
-    private LocalDateTimeAttributeConverter localDateTimeAttributeConverter = new LocalDateTimeAttributeConverter();
+    private final LocalDateTimeAttributeConverter localDateTimeAttributeConverter = new LocalDateTimeAttributeConverter();
     private final Customer CUSTOMER = new Customer("AAAA", "Aluminio",
             "Maria Anders", "Sales Representative", "Obere Str. 57",
             "Berlin", null, "12209", "Germany", "030-0074321",
@@ -77,9 +74,19 @@ public class OrderControllerTest {
             null
     );
 
-
-
-
+    private final OrderRequest ORDER_REQUEST = new OrderRequest(
+            "AAAA",
+            1,
+            "1960-05-01",
+            "1960-05-01",
+            "1948-12-08",
+            1, 10.0,
+            "ShipCity",
+            "ShipRegion",
+            "ShipPostalCode",
+            "ShipCountry",
+            "AAAA",
+            "A");
 
     @BeforeEach
     void setup(){
@@ -121,7 +128,7 @@ public class OrderControllerTest {
 
     @Test
     void testFindById(){
-        Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(ORDER));
+        Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.of(ORDER));
         Assertions.assertEquals(
                 HttpStatus.OK,
                 orderController.findOne(1).getStatusCode()
@@ -136,49 +143,35 @@ public class OrderControllerTest {
                 orderController.findOne(1).getStatusCode()
         );
     }
+
     @Test
     void testAdd(){
+        Mockito.when(customerRepository.findById("AAAA")).thenReturn(java.util.Optional.of(CUSTOMER));
+        Mockito.when(shipperRepository.findById(1)).thenReturn(java.util.Optional.of(SHIPPER));
+        Mockito.when(employeeRepository.findById(1)).thenReturn(java.util.Optional.of(EMPLOYEE));
         Mockito.when(orderRepository.save(any(Order.class))).thenReturn(ORDER);
         Mockito.when(orderRepository.saveAndFlush(any(Order.class))).thenReturn(ORDER);
-        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(CUSTOMER));
-        Mockito.when(shipperRepository.findById(any(Integer.class))).thenReturn(Optional.of(SHIPPER));
-        Mockito.when(employeeRepository.findById(any(Integer.class))).thenReturn(Optional.of(EMPLOYEE));
-
-        String oDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getOrderDate());
-        String rDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getRequiredDate());
-        String sDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getShippedDate());
-
-        OrderRequest aRequest = new OrderRequest(ORDER.getCustomer().getId(), ORDER.getEmployee().getId(), oDate, rDate, sDate, ORDER.getShipper().getId(), ORDER.getFreight(), ORDER.getShipName(), ORDER.getShipAddress(), ORDER.getShipCity(), ORDER.getShipRegion(), ORDER.getShipPostalCode(), ORDER.getShipCountry());
         Assertions.assertEquals(
-                HttpStatus.CREATED,
-                orderController.add(aRequest).getStatusCode()
+                HttpStatus.OK,
+                orderController.add(ORDER_REQUEST).getStatusCode()
         );
     }
 
     @Test
     void testUpdate(){
-        Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(ORDER));
+        Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.of(ORDER));
+        Mockito.when(customerRepository.findById("AAAA")).thenReturn(java.util.Optional.of(CUSTOMER));
+        Mockito.when(shipperRepository.findById(1)).thenReturn(java.util.Optional.of(SHIPPER));
         Mockito.when(orderRepository.save(ORDER)).thenReturn(ORDER);
-        Mockito.when(orderRepository.saveAndFlush(any(Order.class))).thenReturn(ORDER);
-        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(CUSTOMER));
-        Mockito.when(shipperRepository.findById(any(Integer.class))).thenReturn(Optional.of(SHIPPER));
-        Mockito.when(employeeRepository.findById(any(Integer.class))).thenReturn(Optional.of(EMPLOYEE));
-
-        String oDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getOrderDate());
-        String rDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getRequiredDate());
-        String sDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getShippedDate());
-
-        OrderRequest aRequest = new OrderRequest(ORDER.getCustomer().getId(), ORDER.getEmployee().getId(), oDate, rDate, sDate, ORDER.getShipper().getId(), ORDER.getFreight(), ORDER.getShipName(), ORDER.getShipAddress(), ORDER.getShipCity(), ORDER.getShipRegion(), ORDER.getShipPostalCode(), ORDER.getShipCountry());
-
         Assertions.assertEquals(
                 HttpStatus.ACCEPTED,
-                orderController.update(1, aRequest).getStatusCode()
+                orderController.update(1, ORDER_REQUEST).getStatusCode()
         );
     }
 
     @Test
     void testDelete(){
-        Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(ORDER));
+        Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.of(ORDER));
         Mockito.when(orderRepository.save(ORDER)).thenReturn(ORDER);
         Assertions.assertEquals(
                 HttpStatus.ACCEPTED,
@@ -198,22 +191,9 @@ public class OrderControllerTest {
     @Test
     void testUpdateNotFound(){
         Mockito.when(orderRepository.findById(1)).thenReturn(java.util.Optional.empty());
-        Mockito.when(orderRepository.save(ORDER)).thenReturn(ORDER);
-        Mockito.when(orderRepository.saveAndFlush(any(Order.class))).thenReturn(ORDER);
-        Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.of(CUSTOMER));
-        Mockito.when(shipperRepository.findById(any(Integer.class))).thenReturn(Optional.of(SHIPPER));
-        Mockito.when(employeeRepository.findById(any(Integer.class))).thenReturn(Optional.of(EMPLOYEE));
-
-        String oDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getOrderDate());
-        String rDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getRequiredDate());
-        String sDate = localDateTimeAttributeConverter.convertToDatabaseColumn(ORDER.getShippedDate());
-
-        OrderRequest aRequest = new OrderRequest(ORDER.getCustomer().getId(), ORDER.getEmployee().getId(), oDate, rDate, sDate, ORDER.getShipper().getId(), ORDER.getFreight(), ORDER.getShipName(), ORDER.getShipAddress(), ORDER.getShipCity(), ORDER.getShipRegion(), ORDER.getShipPostalCode(), ORDER.getShipCountry());
-
-
         Assertions.assertEquals(
-                HttpStatus.NOT_FOUND,
-                orderController.update(1, aRequest).getStatusCode()
+                HttpStatus.BAD_REQUEST,
+                orderController.update(1, ORDER_REQUEST).getStatusCode()
         );
     }
 

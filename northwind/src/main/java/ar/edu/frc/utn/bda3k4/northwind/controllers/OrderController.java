@@ -52,7 +52,7 @@ public class OrderController {
             order.setShipper(shipper);
             order.setEmployee(employee);
             order = orderService.add(order);
-            return ResponseEntity.status(HttpStatus.CREATED).body(OrderResponse.from(order));
+            return ResponseEntity.ok(OrderResponse.from(order));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

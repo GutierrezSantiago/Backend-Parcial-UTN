@@ -2,9 +2,11 @@ package ar.edu.frc.utn.bda3k4.northwind.entities.request;
 
 import ar.edu.frc.utn.bda3k4.northwind.entities.Product;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ProductRequest {
     @NotBlank(message = "Product Name is mandatory")
     private String name;
