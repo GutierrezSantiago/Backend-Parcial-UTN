@@ -124,5 +124,4 @@ public class Employee {
         this.notes = notes;
         this.photoPath = photoPath;
     }
-
 }
