@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static org.mockito.ArgumentMatchers.any;
 
 public class CategoryControllerTest {
     private CategoryController categoryController;
@@ -67,9 +68,10 @@ public class CategoryControllerTest {
 
     @Test
     void testAdd(){
-        Mockito.when(categoryRepository.save(CATEGORY)).thenReturn(CATEGORY);
+        Mockito.when(categoryRepository.save(any(Category.class))).thenReturn(CATEGORY);
+        Mockito.when(categoryRepository.saveAndFlush(any(Category.class))).thenReturn(CATEGORY);
         Assertions.assertEquals(
-                HttpStatus.CREATED,
+                HttpStatus.OK,
                 categoryController.add(new CategoryRequest()).getStatusCode()
         );
     }
