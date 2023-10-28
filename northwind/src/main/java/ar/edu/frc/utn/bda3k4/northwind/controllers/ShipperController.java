@@ -50,7 +50,7 @@ public class ShipperController {
             Shipper shipper = shipperService.update(id, aRequest.toShipper());
             return ResponseEntity.accepted().body(ShipperResponse.from(shipper));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

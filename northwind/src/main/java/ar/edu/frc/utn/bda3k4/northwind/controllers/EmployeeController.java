@@ -59,7 +59,7 @@ public class EmployeeController {
             modifiedEmployee = employeeService.update(id, modifiedEmployee);
             return ResponseEntity.accepted().body(EmployeeResponse.from(modifiedEmployee));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

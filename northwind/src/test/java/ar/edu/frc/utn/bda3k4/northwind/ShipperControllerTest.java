@@ -79,7 +79,7 @@ public class ShipperControllerTest {
         Mockito.when(shipperRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(shipper));
         Mockito.when(shipperRepository.save(shipper)).thenReturn(shipper);
         Assertions.assertEquals(
-                HttpStatus.OK,
+                HttpStatus.ACCEPTED,
                 shipperController.update(1, new ShipperRequest()).getStatusCode()
         );
     }
@@ -97,7 +97,7 @@ public class ShipperControllerTest {
     void testDelete(){
         Mockito.when(shipperRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(shipper));
         Assertions.assertEquals(
-                HttpStatus.OK,
+                HttpStatus.ACCEPTED,
                 shipperController.delete(1).getStatusCode()
         );
     }

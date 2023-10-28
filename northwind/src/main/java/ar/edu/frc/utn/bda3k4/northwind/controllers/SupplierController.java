@@ -50,7 +50,7 @@ public class SupplierController {
             Supplier supplier = supplierService.update(id, aRequest.toSupplier());
             return ResponseEntity.accepted().body(SupplierResponse.from(supplier));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

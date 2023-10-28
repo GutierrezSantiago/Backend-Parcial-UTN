@@ -49,7 +49,7 @@ public class CategoryController {
             val category = categoryService.update(id, aRequest.toCategory());
             return ResponseEntity.accepted().body(CategoryResponse.from(category));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -59,7 +59,7 @@ public class CategoryController {
     public ResponseEntity<Object> delete(@PathVariable Integer id) {
         try {
             Category category = categoryService.delete(id);
-            return ResponseEntity.accepted().body(CategoryResponse.from(category));
+            return ResponseEntity.ok().body(CategoryResponse.from(category));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

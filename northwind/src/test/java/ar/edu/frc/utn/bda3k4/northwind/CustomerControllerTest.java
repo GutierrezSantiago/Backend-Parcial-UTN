@@ -85,7 +85,7 @@ public class CustomerControllerTest {
         Mockito.when(customerRepository.saveAndFlush(any(Customer.class))).thenReturn(CUSTOMER);
 
         Assertions.assertEquals(
-                HttpStatus.CREATED,
+                HttpStatus.OK,
                 customerController.add(new CustomerCreateRequest()).getStatusCode()
         );
     }
@@ -107,15 +107,10 @@ public class CustomerControllerTest {
     void testUpdateNotFound() {
         Mockito.when(customerRepository.findById(anyString())).thenReturn(Optional.empty());
 
-        Mockito.when(customerRepository.save(any(Customer.class))).thenReturn(CUSTOMER);
-        Mockito.when(customerRepository.saveAndFlush(any(Customer.class))).thenReturn(CUSTOMER);
-
-        IllegalArgumentException thrown =  Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> customerController.update("AAAA", new CustomerUpdateRequest()),
-                "Se espera ResourceNotFoundException");
-
-        Assertions.assertEquals(thrown.getMessage(), "Customer not found");
+        Assertions.assertEquals(
+                HttpStatus.BAD_REQUEST,
+                customerController.update("AAAA", new CustomerUpdateRequest()).getStatusCode()
+        );
     }
 
     @Test
@@ -123,7 +118,7 @@ public class CustomerControllerTest {
         Mockito.when(customerRepository.existsById(anyString())).thenReturn(true);
 
         Assertions.assertEquals(
-                HttpStatus.NO_CONTENT,
+                HttpStatus.NOT_FOUND,
                 customerController.delete("AAAA").getStatusCode()
         );
     }

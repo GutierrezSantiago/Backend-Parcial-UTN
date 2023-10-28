@@ -40,7 +40,7 @@ public class CustomerController {
             val customer = customerService.add(aRequest.toCustomer());
             return ResponseEntity.ok(CustomerResponse.from(customer));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

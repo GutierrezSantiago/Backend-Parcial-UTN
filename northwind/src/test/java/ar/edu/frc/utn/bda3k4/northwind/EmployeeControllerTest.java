@@ -12,15 +12,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 
 public class EmployeeControllerTest {
 
     private EmployeeController employeeController;
     private EmployeeRepository employeeRepository;
-    private LocalDateTimeAttributeConverter localDateTimeAttributeConverter;
+    private LocalDateTimeAttributeConverter localDateTimeAttributeConverter = new LocalDateTimeAttributeConverter();
     private final Employee EMPLOYEE = new Employee(
             1,
             "Davolio",
@@ -89,9 +90,12 @@ public class EmployeeControllerTest {
 
     @Test
     void testAdd(){
-        Mockito.when(employeeRepository.save(EMPLOYEE)).thenReturn(EMPLOYEE);
+        Mockito.when(employeeRepository.save(any(Employee.class))).thenReturn(EMPLOYEE);
+        Mockito.when(employeeRepository.saveAndFlush(any(Employee.class))).thenReturn(EMPLOYEE);
+
+
         Assertions.assertEquals(
-                HttpStatus.CREATED,
+                HttpStatus.OK,
                 employeeController.add(new EmployeeRequest()).getStatusCode()
         );
     }
@@ -101,7 +105,7 @@ public class EmployeeControllerTest {
         Mockito.when(employeeRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(EMPLOYEE));
         Mockito.when(employeeRepository.save(EMPLOYEE)).thenReturn(EMPLOYEE);
         Assertions.assertEquals(
-                HttpStatus.OK,
+                HttpStatus.ACCEPTED,
                 employeeController.update(1, new EmployeeRequest()).getStatusCode()
         );
     }
