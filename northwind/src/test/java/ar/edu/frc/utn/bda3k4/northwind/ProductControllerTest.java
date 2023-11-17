@@ -55,7 +55,7 @@ public class ProductControllerTest {
         supplierRepository = Mockito.mock(SupplierRepository.class);
         CategoryServiceImpl categoryService = new CategoryServiceImpl(categoryRepository);
         SupplierServiceImpl supplierService = new SupplierServiceImpl(supplierRepository);
-        ProductServiceImpl productService = new ProductServiceImpl(productRepository);
+        ProductServiceImpl productService = new ProductServiceImpl(productRepository, categoryService, supplierService);
         productController = new ProductController(productService, categoryService, supplierService);
     }
 
@@ -152,6 +152,55 @@ public class ProductControllerTest {
                 productController.delete(1).getStatusCode()
         );
     }
+    @Test
+    void testFindByCategoryAndSupplierAndStockmin(){
+        List<Product> productList = new ArrayList<>();
+        productList.add(PRODUCT);
+        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(CATEGORY));
+        Mockito.when(supplierRepository.findById(1)).thenReturn(Optional.of(SUPPLIER));
+        Mockito.when(productRepository.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10)).thenReturn(productList);
+        Assertions.assertEquals(
+                HttpStatus.OK,
+                productController.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10).getStatusCode()
+        );
+    }
+
+    @Test
+    void testFindByCategoryAndSupplierAndStockminNotFoundCategory(){
+        List<Product> productList = new ArrayList<>();
+        productList.add(PRODUCT);
+        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.empty());
+        Mockito.when(supplierRepository.findById(1)).thenReturn(Optional.of(SUPPLIER));
+        Mockito.when(productRepository.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10)).thenReturn(productList);
+        Assertions.assertEquals(
+                HttpStatus.NOT_FOUND,
+                productController.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10).getStatusCode()
+        );
+    }
+    @Test
+    void testFindByCategoryAndSupplierAndStockminNotFoundSupplier(){
+        List<Product> productList = new ArrayList<>();
+        productList.add(PRODUCT);
+        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(CATEGORY));
+        Mockito.when(supplierRepository.findById(1)).thenReturn(Optional.empty());
+        Mockito.when(productRepository.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10)).thenReturn(productList);
+        Assertions.assertEquals(
+                HttpStatus.NOT_FOUND,
+                productController.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10).getStatusCode()
+        );
+    }
+    @Test
+    void testFindByCategoryAndSupplierAndStockminEmptyList(){
+        List<Product> productList = new ArrayList<>();
+        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(CATEGORY));
+        Mockito.when(supplierRepository.findById(1)).thenReturn(Optional.of(SUPPLIER));
+        Mockito.when(productRepository.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10)).thenReturn(productList);
+        Assertions.assertEquals(
+                HttpStatus.NO_CONTENT,
+                productController.findProductsByCategoryAndSupplierAndSafetyStock(1, 1, 10).getStatusCode()
+        );
+    }
+
 
 
 }

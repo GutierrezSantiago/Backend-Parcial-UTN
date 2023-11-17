@@ -3,12 +3,15 @@ package ar.edu.frc.utn.bda3k4.northwind.controllers;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Category;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Product;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Supplier;
+import ar.edu.frc.utn.bda3k4.northwind.entities.exceptions.EmptyListException;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.ProductRequest;
+import ar.edu.frc.utn.bda3k4.northwind.entities.response.ProductByCatAndSupAndStockResponse;
 import ar.edu.frc.utn.bda3k4.northwind.entities.response.ProductResponse;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.CategoryService;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.ProductService;
 import ar.edu.frc.utn.bda3k4.northwind.services.interfaces.SupplierService;
 import lombok.val;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,5 +100,23 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @GetMapping("/checkstock")
+    public ResponseEntity<Object> findProductsByCategoryAndSupplierAndSafetyStock(@RequestParam Integer categoryId, @RequestParam Integer supplierId,@RequestParam  Integer stockmin) {
+        try {
+            val products = productService.findProductsByCategoryAndSupplierAndSafetyStock(categoryId, supplierId, stockmin)
+                    .stream()
+                    .map(ProductByCatAndSupAndStockResponse::from)
+                    .toList();
+            return ResponseEntity.ok(products);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (EmptyListException e) {
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
     }
 }

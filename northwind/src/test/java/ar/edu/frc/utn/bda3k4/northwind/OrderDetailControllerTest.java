@@ -6,12 +6,8 @@ import ar.edu.frc.utn.bda3k4.northwind.entities.OrderDetail;
 import ar.edu.frc.utn.bda3k4.northwind.entities.Product;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.create.OrderDetailCreateRequest;
 import ar.edu.frc.utn.bda3k4.northwind.entities.request.update.OrderDetailUpdateRequest;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.OrderDetailRepository;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.OrderRepository;
-import ar.edu.frc.utn.bda3k4.northwind.repositories.ProductRepository;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.OrderDetailServiceImpl;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.OrderServiceImpl;
-import ar.edu.frc.utn.bda3k4.northwind.services.implementations.ProductServiceImpl;
+import ar.edu.frc.utn.bda3k4.northwind.repositories.*;
+import ar.edu.frc.utn.bda3k4.northwind.services.implementations.*;
 import ar.edu.frc.utn.bda3k4.northwind.support.OrderDetailPK;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +28,8 @@ public class OrderDetailControllerTest {
     private OrderDetailRepository orderDetailRepository;
     private ProductRepository productRepository;
     private OrderRepository orderRepository;
+    private CategoryRepository categoryRepository;
+    private SupplierRepository supplierRepository;
     private final OrderDetail ORDERDETAIL = new OrderDetail(1, 1, 1.0, 1, 1.0);
     private final Product PRODUCT = new Product(1, "", "", 1.0,
             1, 1, 1, false);
@@ -49,8 +47,12 @@ public class OrderDetailControllerTest {
         orderDetailRepository = Mockito.mock(OrderDetailRepository.class);
         productRepository = Mockito.mock(ProductRepository.class);
         orderRepository = Mockito.mock(OrderRepository.class);
+        categoryRepository = Mockito.mock(CategoryRepository.class);
+        supplierRepository = Mockito.mock(SupplierRepository.class);
+        CategoryServiceImpl categoryService = new CategoryServiceImpl(categoryRepository);
+        SupplierServiceImpl supplierService = new SupplierServiceImpl(supplierRepository);
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
-        ProductServiceImpl productService = new ProductServiceImpl(productRepository);
+        ProductServiceImpl productService = new ProductServiceImpl(productRepository, categoryService, supplierService);
         OrderDetailServiceImpl service = new OrderDetailServiceImpl(orderDetailRepository, orderService, productService);
         orderDetailController = new OrderDetailController(service);
     }

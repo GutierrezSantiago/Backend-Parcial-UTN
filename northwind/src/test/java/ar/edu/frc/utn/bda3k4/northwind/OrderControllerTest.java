@@ -29,6 +29,8 @@ public class OrderControllerTest {
     private EmployeeRepository employeeRepository;
     private CustomerRepository customerRepository;
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
+    private SupplierRepository supplierRepository;
     private final LocalDateTimeAttributeConverter localDateTimeAttributeConverter = new LocalDateTimeAttributeConverter();
     private final Customer CUSTOMER = new Customer("AAAA", "Aluminio",
             "Maria Anders", "Sales Representative", "Obere Str. 57",
@@ -95,7 +97,11 @@ public class OrderControllerTest {
         shipperRepository = Mockito.mock(ShipperRepository.class);
         employeeRepository = Mockito.mock(EmployeeRepository.class);
         productRepository = Mockito.mock(ProductRepository.class);
-        ProductServiceImpl productService = new ProductServiceImpl(productRepository);
+        categoryRepository = Mockito.mock(CategoryRepository.class);
+        supplierRepository = Mockito.mock(SupplierRepository.class);
+        CategoryServiceImpl categoryService = new CategoryServiceImpl(categoryRepository);
+        SupplierServiceImpl supplierService = new SupplierServiceImpl(supplierRepository);
+        ProductServiceImpl productService = new ProductServiceImpl(productRepository, categoryService, supplierService);
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
         CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository, productService);
         ShipperServiceImpl shipperService = new ShipperServiceImpl(shipperRepository);
@@ -103,7 +109,7 @@ public class OrderControllerTest {
         orderController = new OrderController(orderService,
                 customerService,
                 shipperService,
-                employeeService);
+                employeeService, productService);
     }
 
     @Test
